@@ -2,15 +2,21 @@ package com.mp.test_cv;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.hardware.Camera;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
+import org.opencv.imgproc.Imgproc;
+
 public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Callback{
     SurfaceHolder surfaceHolder;
     Camera camera = null;
+    Canvas c = null;
 
     Context context;
 
@@ -37,6 +43,8 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         camera = Camera.open();
+       // c = surfaceHolder.lockCanvas(null);
+        //draw(c);
 
         try{
             Camera.Parameters parameters = camera.getParameters();
@@ -93,5 +101,16 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
         {
             return false;
         }
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        super.draw(canvas);
+
+        Paint MyPaint = new Paint();
+        MyPaint.setStyle(Paint.Style.STROKE);
+        MyPaint.setColor(Color.GREEN);
+        MyPaint.setStrokeWidth(10f);
+        canvas.drawRect(0, 0, 200, 200, MyPaint);
     }
 }

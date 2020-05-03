@@ -1,22 +1,48 @@
 package com.mp.test_cv;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.hardware.Camera;
+import android.hardware.camera2.CameraDevice;
+import android.hardware.camera2.CameraManager;
+import android.media.Image;
+import android.media.ImageReader;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.googlecode.tesseract.android.TessBaseAPI;
+
+import org.opencv.android.OpenCVLoader;
+import org.opencv.android.Utils;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfPoint;
+import org.opencv.core.Point;
+import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,171 +50,60 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
-    private Button button;
-    private TextView OCRTextView;
-    static TessBaseAPI tessBaseAPI;
-    CameraSurfaceView surfaceView;
-    ImageView imageView;
-    private String dataPath = "";
-    private String lang = "";
-
-   // private int ACTIVITY_REQUEST_CODE = 1;
-
-    // Used to load the 'native-lib' library on application startup.
-    static {
-        System.loadLibrary("native-lib");
-    }
-
+    private static final String TAG = "MainActivity";
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //뷰 선언
-        imageView = findViewById(R.id.imageView);
-        surfaceView = findViewById(R.id.surfaceView);
-        OCRTextView = findViewById(R.id.textView);
-        button = findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                capture();
-            }
-        });
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-
-        tessBaseAPI = new TessBaseAPI();
-        //tesseract 인식 언어를 설정 및 초기화
-        dataPath = getFilesDir() + "/tesseract";
-        lang = "kor+eng";
-
-       // checkFile(new File(dataPath + "/tessdata"), "kor");
-        //checkFile(new File(dataPath + "/tessdata"), "eng");
-
-        //tessBaseAPI.init(dataPath, lang);
-        String dir = getFilesDir() + "/tesseract";
-        if(checkLanguageFile(dir+"/tessdata"))
-            tessBaseAPI.init(dir, "eng");
-
-        // Example of a call to a native method
-        //processImage(BitmapFactory.decodeResource(getResources(), R.drawable.nutrition_facts));
-    }
-
-    boolean checkLanguageFile(String dir)
-    {
-        File file = new File(dir);
-        if(!file.exists() && file.mkdirs())
-            createFiles(dir);
-        else if(file.exists()){
-            String filePath = dir + "/eng.traineddata";
-            File langDataFile = new File(filePath);
-            if(!langDataFile.exists())
-                createFiles(dir);
-        }
-        return true;
-    }
-
-    private void createFiles(String dir)
-    {
-        AssetManager assetMgr = this.getAssets();
-
-        InputStream inputStream = null;
-        OutputStream outputStream = null;
-
-        try {
-            inputStream = assetMgr.open("eng.traineddata");
-
-            String destFile = dir + "/eng.traineddata";
-
-            outputStream = new FileOutputStream(destFile);
-
-            byte[] buffer = new byte[1024];
-            int read;
-            while ((read = inputStream.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, read);
-            }
-            inputStream.close();
-            outputStream.flush();
-            outputStream.close();
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void capture()
-    {
-        surfaceView.capture(new Camera.PictureCallback() {
-            @Override
-            public void onPictureTaken(byte[] bytes, Camera camera) {
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                options.inSampleSize = 8;
-
-                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                bitmap = GetRotatedBitmap(bitmap, 90);
-
-                imageView.setImageBitmap(bitmap);
-
-                button.setEnabled(false);
-                button.setText("텍스트 인식중...");
-                new AsyncTess().execute(bitmap);
-
-                camera.startPreview();
-            }
-        });
-    }
-
-    public synchronized static Bitmap GetRotatedBitmap(Bitmap bitmap, int degrees) {
-        if (degrees != 0 && bitmap != null) {
-            Matrix m = new Matrix();
-            m.setRotate(degrees, (float) bitmap.getWidth() / 2, (float) bitmap.getHeight() / 2);
-            try {
-                Bitmap b2 = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), m, true);
-                if (bitmap != b2) {
-                    bitmap = b2;
+        if(user == null) {
+            myStartActivity(SignUpActivity.class);
+        }else {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            DocumentReference docRef = db.collection("users").document(user.getUid());
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document != null) {
+                            if (document.exists()) {
+                                Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                            } else {
+                                Log.d(TAG, "No such document");
+                                myStartActivity(MemberInitActivity.class);
+                            }
+                        }
+                    } else {
+                        Log.d(TAG, "get failed with ", task.getException());
+                    }
                 }
-            } catch (OutOfMemoryError ex) {
-                ex.printStackTrace();
+            });
+        }
+        findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
+    }
+
+    View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.logoutButton:
+                    FirebaseAuth.getInstance().signOut();
+                    myStartActivity(SignUpActivity.class);
+                    break;
             }
         }
-        return bitmap;
+    };
+    private void myStartActivity(Class c) {
+        Intent intent = new Intent(this, c);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //로그인 한 상태에서 뒤로가기 눌렀을 때 메인액티비로 이동, 나머지 스택 없어짐.
+        startActivity(intent);
     }
-
-    private class AsyncTess extends AsyncTask<Bitmap, Integer, String> {
-        @Override
-        protected String doInBackground(Bitmap... mRelativeParams) {
-            tessBaseAPI.setImage(mRelativeParams[0]);
-            return tessBaseAPI.getUTF8Text();
-        }
-
-        protected void onPostExecute(String result) {
-            OCRTextView.setText(result);
-            Toast.makeText(MainActivity.this, ""+result, Toast.LENGTH_LONG).show();
-
-            button.setEnabled(true);
-            button.setText("텍스트 인식");
-        }
-    }
-
-
-
-    /* public void processImage(Bitmap bitmap) {
-        Toast.makeText(getApplicationContext(), "이미지가 복잡할 경우 해석시 많은 시간이 소요될 수 있습니다.", Toast.LENGTH_LONG).show();
-        String OCRresult = null;
-        tess.setImage(bitmap);
-        OCRresult = tess.getUTF8Text();
-        OCRTextView.setText(OCRresult);
-    }
-*/
-
-
-
-    /**
-     * A native method that is implemented by the 'native-lib' native library,
-     * which is packaged with this application.
-     */
-
-    public native String stringFromJNI();
 }

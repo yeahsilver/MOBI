@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "81618930233",
+    "firebase_url": "https://healthguide-fff47.firebaseio.com",
+    "project_id": "healthguide-fff47",
+    "storage_bucket": "healthguide-fff47.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:81618930233:android:272d944454410af5b59be8",
+        "android_client_info": {
+          "package_name": "com.mp.healthguide"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "81618930233-tv8l0j5t70u49582lhtlmsp7uskit9r2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXxWyOxPG975cNX5DTcvHzCAcscMidOco"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "81618930233-tv8l0j5t70u49582lhtlmsp7uskit9r2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:81618930233:android:ea93fc618194642cb59be8",
+        "android_client_info": {
+          "package_name": "com.mp.test_cv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "81618930233-tv8l0j5t70u49582lhtlmsp7uskit9r2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXxWyOxPG975cNX5DTcvHzCAcscMidOco"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "81618930233-tv8l0j5t70u49582lhtlmsp7uskit9r2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
