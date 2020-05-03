@@ -1,4 +1,18 @@
 <resources>
+
+    <string-array name="gender">
+        <item>"남"</item>
+        <item>"여"</item>
+    </string-array>
+
+    <string-array name="pa">
+        <item>비활동적</item>
+        <item>저활동적</item>
+        <item>활동적</item>
+        <item>매우 활동적</item>
+    </string-array>
+
+
     <string name="app_name">test_cv</string>
     <string name="ocr_result_tip">인식 결과는 여기에 나타납니다.</string>
     <string name="title_activity_login">Sign in</string>
