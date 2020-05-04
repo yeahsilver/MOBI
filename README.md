@@ -94,7 +94,7 @@
 ![image](https://user-images.githubusercontent.com/43927910/77143955-0221e280-6ac8-11ea-8338-da5ff079bb4c.png)
 
 > DB Architecture
-
+![Database Schema-2](https://user-images.githubusercontent.com/28800101/80948724-a91acd80-8e2d-11ea-9b09-09b8ac3ac361.png)
 
   - Firebase Authentication 
   
