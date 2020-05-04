@@ -105,12 +105,14 @@
   * 사용자가 실제 섭취한 영양 성분의 총량
 * **영양성분표**
   * 스캔한 영양 성분표에 기재된 정보, 섭취한 성분의 숫자 데이터 값
-<br/>
-  - Firebase Authentication
-    - ` User Info `
 
-  - Firebase Cloud
-    - ` ML Kit Module `
+<br/>
+
+- Firebase Authentication
+  - ` User Info `
+
+- Firebase Cloud
+  - ` ML Kit Module `
 
 <br/>
 
