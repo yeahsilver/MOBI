@@ -30,7 +30,7 @@
 ## 💁 팀 구성
   * **김승지: Project Manager & Design Administrator**
 
-    * ` UI `, ` Firebase ML KIT Manager ` , ` Meeting Recorder `
+    * ` UI `, ` Firebase ML KIT Manager `, ` OpenCV `
 
   * **박재희: Design Administrator**
 
@@ -38,7 +38,7 @@
 
   * **허예은: Server Manager & Database Administrator**
 
-    * ` Firebase Authentification `, ` Firebase Database Connector `
+    * ` Firebase Authentification `, ` OpenCV ` , ` Meeting Recorder `
 
   * **박정아: Server Manager & Database Administrator**
 
@@ -76,7 +76,7 @@
 
     * new content 업로드 브랜치. pull request를 생성 후 통과된 폴더 및 파일만 'master'에 merge
 
- *  ` feature/'기능명' `
+ *  ` 팀원명 `
 
     * 새로운 기능을 추가할 때 생성하는 브랜치. 기능이 완성되면 'dev' 브랜치에 merge
 
@@ -138,3 +138,4 @@
 - [2020년 3월 30일 화요일 회의록](./meeting-record/20200331.md )
 - [2020년 4월 6일 월요일 회의록](./meeting-record/20200408.md)
 - [2020년 4월 27일 월요일 회의록](./meeting-record/20200427.md)
+- [2020년 5월 4일 월요일 회의록](./meeting-record/20200504.md)
