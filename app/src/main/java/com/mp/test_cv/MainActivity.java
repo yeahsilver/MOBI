@@ -55,10 +55,13 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Button btnInfo = (Button) findViewById(R.id.info);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -87,6 +90,14 @@ public class MainActivity extends AppCompatActivity {
             });
         }
         findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
+
+        btnInfo.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), NutritionInfo.class);
+                startActivity(intent);
+            }
+        });
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -100,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     };
+
     private void myStartActivity(Class c) {
         Intent intent = new Intent(this, c);
         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -6,8 +6,8 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="21"
-8-->C:\Users\82103\AndroidStudioProjects\HealthGuide\opencv\java\AndroidManifest.xml
+8-->/Users/heoyeeun/Documents/GitHub/MOBI/opencv/java/AndroidManifest.xml
 9        android:targetSdkVersion="26" />
-9-->C:\Users\82103\AndroidStudioProjects\HealthGuide\opencv\java\AndroidManifest.xml
+9-->/Users/heoyeeun/Documents/GitHub/MOBI/opencv/java/AndroidManifest.xml
 10
 11</manifest>
