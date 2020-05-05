@@ -1,4 +1,4 @@
-# 🏃 모두의 헬스 케어 - Health Guide  
+# 🏃 모두의 헬스 케어 비서 - MOBI 
 
 ## ✍️ 주요 기능
 
@@ -59,7 +59,7 @@
 
 * Firebase Authentication (oauth)
 
-* Firebase ML Kit - Text Recognition
+* tesseract - Text Recognition
 
 
 <br/>
@@ -127,6 +127,8 @@
     - [스캔 이미지 처리](https://www.opentutorials.org/module/3811/25283)
     - [Tess two를 이용한 ocr 앱 만들기 문자 인식](https://hjiee.tistory.com/entry/Android-TessTwo를-이용한-OCR-앱-만들기문자인식)
     - [Tenserflow를 이용한 object recognition](https://cloud.google.com/solutions/creating-object-detection-application-tensorflow?hl=ko)
+    - [Tesseract 개발환경 만들기](https://junyoung-jamong.github.io/computer/vision/2019/02/07/Android-Tesseract-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0.html)
+    - [Camera X](https://developer.android.com/training/camerax)
 
 
 
