@@ -29,7 +29,7 @@ public class MemberInitActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private Spinner spinner;
     private Spinner gender_spinner;
-    private int activityMeasure;
+    private double activityMeasure;
     private int gender; //0 = female, 1 = male.
     private static final String TAG = "MemberInitActivity";
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,10 +42,10 @@ public class MemberInitActivity extends AppCompatActivity {
         gender_spinner = (Spinner)findViewById(R.id.genderSpinner);
         //input array data
         final ArrayList<String> list = new ArrayList<>();
-        list.add("주로 앉아서 생활함: 25"); // 25
-        list.add("보통의 활동량을 가짐: 30"); //30
-        list.add("활발한 활동량을 가짐: 35"); //35
-        list.add("몸으로 하는 활동이 많음: 40"); //40
+        list.add("주로 앉아서 생활함");
+        list.add("보통의 활동량을 가짐");
+        list.add("활발한 활동량을 가짐");
+        list.add("몸으로 하는 활동이 많음");
        // String a = list.get(0);
         final ArrayList<String> list_gender = new ArrayList<>();
         list_gender.add("female");
@@ -58,26 +58,26 @@ public class MemberInitActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                switch(position) {
+                switch(position) { // female 기준
                     case 0:
-                        activityMeasure = 25;
+                        activityMeasure = 1.0;
                         break;
                     case 1:
-                        activityMeasure = 30;
+                        activityMeasure = 1.12;
                         break;
                     case 2:
-                        activityMeasure = 35;
+                        activityMeasure = 1.27;
                         break;
                     case 3:
-                        activityMeasure = 40;
+                        activityMeasure = 1.45;
                         break;
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                activityMeasure = 30;
-                startToast("activity set default value(: 30)");
+                activityMeasure = 1.0;
+                startToast("activity set default value(: 1.0)");
             }
         });
 
@@ -90,10 +90,13 @@ public class MemberInitActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch(position) {
                     case 0:
-                         gender = 0; //female
+                        gender = 0; //female
                         break;
                     case 1:
                         gender = 1; //male
+                        if (activityMeasure == 1.12) { activityMeasure -= 1; }
+                        else if (activityMeasure == 1.27) { activityMeasure -= 2; }
+                        else if (activityMeasure == 1.45) { activityMeasure += 3; }
                         break;
                 }
             }
@@ -127,16 +130,21 @@ public class MemberInitActivity extends AppCompatActivity {
         float weight = Float.parseFloat(((EditText)findViewById(R.id.weightEditText)).getText().toString());
         int age = Integer.parseInt(((EditText)findViewById(R.id.ageEditText)).getText().toString());
 
+        int tmpCalories = 0;
         int recCalories = 0;
+
         switch (gender) {
             case 0:
                 // female
                 // 354 - (6.91 * age) + PA[9.36 * weight(kg) + 726 * height(m)]
-                recCalories = (int)(354 - (6.91 * age) + 1.12 * ((9.36 * weight) + (726 * (height * 0.01)))); // 1.12저활동적
+                tmpCalories = (int)(354 - (6.91 * age) + (activityMeasure * ((9.36 * weight) + (726 * (height * 0.01)))));
+                recCalories = (tmpCalories / 100) * 100;
                 break;
             case 1:
                 //male
                 // 662 - (9.53 * age) + PA[15.91 * weight(kg) + 539.6 * height(m)]
+                tmpCalories = (int)(662 - (9.53 * age) + (activityMeasure * ((15.91 * weight) + (539.6 * (height * 0.01)))));
+                recCalories = (tmpCalories / 100) * 100;
                 break;
         }
         int recCarbohydrate = (int)(recCalories * 0.65); // 55 ~ 70 %
