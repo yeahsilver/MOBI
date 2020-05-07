@@ -127,12 +127,31 @@ public class MemberInitActivity extends AppCompatActivity {
         float weight = Float.parseFloat(((EditText)findViewById(R.id.weightEditText)).getText().toString());
         int age = Integer.parseInt(((EditText)findViewById(R.id.ageEditText)).getText().toString());
 
+        int recCalories = 0;
+        switch (gender) {
+            case 0:
+                // female
+                // 354 - (6.91 * age) + PA[9.36 * weight(kg) + 726 * height(m)]
+                recCalories = (int)(354 - (6.91 * age) + 1.12 * ((9.36 * weight) + (726 * (height * 0.01)))); // 1.12저활동적
+                break;
+            case 1:
+                //male
+                // 662 - (9.53 * age) + PA[15.91 * weight(kg) + 539.6 * height(m)]
+                break;
+        }
+        int recCarbohydrate = (int)(recCalories * 0.65); // 55 ~ 70 %
+        int recProtein = (int)(recCalories * 0.15); // 7 ~ 20 %
+        int recFat = (int)(recCalories * 0.2); // 15 ~ 25 %
+
         if (height > 0 && weight > 0 && age > 0 && gender >= 0 && activityMeasure > 0) {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             MemberInfo memberInfo = new MemberInfo(height, weight, age, activityMeasure, gender);
            if (user != null){
-               db.collection("users").document(user.getUid())
+               // RecDailyIntake 생성
+               RecDailyIntake recDailyIntake = new RecDailyIntake(recCalories, recCarbohydrate, recProtein, recFat);
+
+               db.collection("User").document(user.getUid())
                        .set(memberInfo)
                        .addOnSuccessListener(new OnSuccessListener<Void>() {
                            @Override
@@ -148,6 +167,24 @@ public class MemberInitActivity extends AppCompatActivity {
                                Log.w(TAG, "Error writing document", e);
                            }
                        });
+               // RecDailyIntake 컬렉션 생성
+               db.collection("User").document(user.getUid())
+               .collection("RecDailyIntake").document(user.getUid())
+                       .set(recDailyIntake)
+                       .addOnSuccessListener(new OnSuccessListener<Void>() {
+                           @Override
+                           public void onSuccess(Void aVoid) {
+                               finish();
+                           }
+                       })
+                       .addOnFailureListener(new OnFailureListener() {
+                           @Override
+                           public void onFailure(@NonNull Exception e) {
+                               startToast("정보 입력에 실패했습니다..");
+                               Log.w(TAG, "Error writing document", e);
+                           }
+                       });
+
            }
         }
         else {
