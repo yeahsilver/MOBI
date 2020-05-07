@@ -95,15 +95,15 @@
 
 > DB Architecture
 
-![Database Schema-2](https://user-images.githubusercontent.com/28800101/80948724-a91acd80-8e2d-11ea-9b09-09b8ac3ac361.png)
+![Database Shcema-3](https://user-images.githubusercontent.com/28800101/81262551-03f43500-9079-11ea-8a2e-93c2ad383b8f.png)
 
-* **사용자**
+* **User**
   * 사용자의 아이디와 비밀번호, 해당 사용자 데이터가 가지고 있는 하위 정보
-* **권장 섭취량**
-  * 사용자가 섭취해야 하는 영양성분의 총량과
-* **일일 섭취량**
+* **RecDailyIntake**
+  * 사용자가 섭취해야 하는 영양성분의 총량
+* **DailyIntake**
   * 사용자가 실제 섭취한 영양 성분의 총량
-* **영양성분표**
+* **NutritionFacts**
   * 스캔한 영양 성분표에 기재된 정보, 섭취한 성분의 숫자 데이터 값
 
 <br/>
