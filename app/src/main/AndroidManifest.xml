@@ -41,8 +41,8 @@
         <activity android:name=".MemberInitActivity">
 
         </activity>
-        <activity android:name=".NutritionInfo"/>
-        <activity android:name="CameraView"/>
+        <activity android:name=".NutritionInfoActivity"/>
+        <activity android:name=".CameraView"/>
 
     </application>
     <supports-screens

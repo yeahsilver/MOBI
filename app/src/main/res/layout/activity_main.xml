@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".NutritionInfoActivity"
+    android:background="@color/colorPrimary"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    android:padding="20dp"
+    >
 
 
     <Button
         android:id="@+id/logoutButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/btn_edge_purple"
         android:text="logout" />
-
     <Button
-        android:id="@+id/info"
+        android:id="@+id/NutritionInfoButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/btn_edge_purple"
         android:text="상세정보 보기"
         android:layout_marginTop="100dp"/>
 
 
-</RelativeLayout>
+</LinearLayout>
