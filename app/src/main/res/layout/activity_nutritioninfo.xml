@@ -60,14 +60,15 @@
                     android:text="탄수화물" />
 
                 <EditText
+                    android:id="@+id/editCarbo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:ems="3"
-                    android:inputType="number"
-                    android:layout_marginLeft="10dp"
                     android:layout_gravity="center"
-                    android:gravity="center"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="5"
+                    android:ems="3"
+                    android:gravity="center"
+                    android:inputType="number"
                     android:text="00" />
 
             </LinearLayout>
@@ -91,13 +92,14 @@
                     android:text="단백질" />
 
                 <EditText
+                    android:id="@+id/editProtein"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:ems="3"
-                    android:inputType="number"
                     android:layout_marginLeft="10dp"
-                    android:gravity="center"
                     android:layout_weight="5"
+                    android:ems="3"
+                    android:gravity="center"
+                    android:inputType="number"
                     android:text="00" />
 
             </LinearLayout>
@@ -120,13 +122,14 @@
                     android:text="지방" />
 
                 <EditText
+                    android:id="@+id/editFat"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:ems="3"
-                    android:inputType="number"
                     android:layout_marginLeft="10dp"
-                    android:gravity="center"
                     android:layout_weight="5"
+                    android:ems="3"
+                    android:gravity="center"
+                    android:inputType="number"
                     android:text="00" />
 
             </LinearLayout>
@@ -149,13 +152,14 @@
                     android:text="포화지방" />
 
                 <EditText
+                    android:id="@+id/editSaturFat"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:ems="3"
-                    android:inputType="number"
                     android:layout_marginLeft="10dp"
-                    android:gravity="center"
                     android:layout_weight="5"
+                    android:ems="3"
+                    android:gravity="center"
+                    android:inputType="number"
                     android:text="00" />
 
             </LinearLayout>
@@ -178,13 +182,14 @@
                     android:text="당류" />
 
                 <EditText
+                    android:id="@+id/editSugar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:ems="3"
-                    android:inputType="number"
                     android:layout_marginLeft="10dp"
-                    android:gravity="center"
                     android:layout_weight="5"
+                    android:ems="3"
+                    android:gravity="center"
+                    android:inputType="number"
                     android:text="00" />
 
             </LinearLayout>
@@ -207,13 +212,14 @@
                     android:text="나트륨" />
 
                 <EditText
+                    android:id="@+id/editSodium"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:ems="3"
-                    android:inputType="number"
                     android:layout_marginLeft="10dp"
-                    android:gravity="center"
                     android:layout_weight="5"
+                    android:ems="3"
+                    android:gravity="center"
+                    android:inputType="number"
                     android:text="00" />
 
             </LinearLayout>
@@ -236,13 +242,14 @@
                     android:text="식이섬유" />
 
                 <EditText
+                    android:id="@+id/editFiber"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:ems="3"
-                    android:inputType="number"
                     android:layout_marginLeft="10dp"
-                    android:gravity="center"
                     android:layout_weight="5"
+                    android:ems="3"
+                    android:gravity="center"
+                    android:inputType="number"
                     android:text="00" />
 
             </LinearLayout>

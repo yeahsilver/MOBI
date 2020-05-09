@@ -19,7 +19,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class NutritionInfoActivity extends AppCompatActivity {
     final String TAG = getClass().getSimpleName();
-
+    PersonalDailyIntake inputIntake;
+    int calories, carbohydrate, protein, saturatedFat, sugar, sodium, dietaryFiber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +64,7 @@ public class NutritionInfoActivity extends AppCompatActivity {
                 case R.id.calculator:
                     myStartActivity(NutritionInfoActivity.class);
                 case R.id.submit:
+                    //calories = c
                     //사용자 정보 db 받고, 갱신
                     //모든 정보 갱신 과정이 끝나면 mainActivity로 간다.
                     myStartActivity(MainActivity.class);
