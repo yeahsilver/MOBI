@@ -4,9 +4,9 @@ public class MemberInfo {
     private float height;
     private float weight;
     private int age;
-    private int activityMeasure;
+    private double activityMeasure;
     private int gender; // 0 female 1 male
-    public MemberInfo(float height, float weight, int age, int activityMeasure, int gender) {
+    public MemberInfo(float height, float weight, int age, double activityMeasure, int gender) {
         this.height = height;
         this.weight = weight;
         this.age = age;
@@ -32,10 +32,10 @@ public class MemberInfo {
     public void setAge(int age) {
         this.age = age;
     }
-    public int getActivityMeasure() {
+    public double getActivityMeasure() {
         return this.activityMeasure;
     }
-    public void setActivityMeasure(int activityMeasure) {
+    public void setActivityMeasure(double activityMeasure) {
         this.activityMeasure = activityMeasure;
     }
     public int getGender() {

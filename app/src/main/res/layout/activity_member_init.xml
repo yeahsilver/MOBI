@@ -1,68 +1,155 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:gravity="center"
-        android:text="INITIALIZE INFO"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+    android:background="@color/colorPrimary"
+    android:padding="20dp"
+    >
 
     <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="20dp"
+        android:weightSum="10"
+        android:background="@drawable/back_white"
+        >
 
-        <EditText
-            android:id="@+id/heightEditText"
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:background="@null"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:src="@drawable/logo2"
+            android:layout_weight="3"
+            />
+        <TextView
+            android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:ems="10"
-            android:hint="type your HEIGHT"
-            android:inputType="numberDecimal" />
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="25sp"
+            android:fontFamily="@font/font1"
+            android:layout_marginBottom="10dp"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:text="사용자 정보 입력"
+            />
 
-        <EditText
-            android:id="@+id/weightEditText"
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:ems="10"
-            android:hint="type your WEIGHT"
-            android:inputType="numberDecimal" />
+            android:orientation="vertical"
+            android:layout_weight="3">
 
-        <EditText
-            android:id="@+id/ageEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:ems="10"
-            android:hint="type your AGE"
-            android:inputType="number" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/heightEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="신장(cm)"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <Spinner
-            android:id="@+id/genderSpinner"
-            android:hint="Gender"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"/>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/weightEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="몸무게(kg)"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <Spinner
-            android:id="@+id/activitySpinner"
-            android:layout_width="match_parent"
-            android:hint="ACTIVITY Measure"
-            android:layout_height="40dp" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ageEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="나이(세)"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RelativeLayout
+                android:id="@+id/RelativeLayout_userInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
+
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/genderSpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:entries="@array/gender"
+                    android:layout_marginRight="10dp"
+                    />
+
+                <TextView
+                    android:id="@+id/gender_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:textSize="18dp"
+                    android:gravity="center"
+                    android:layout_toRightOf="@+id/spinner_gender"
+                    android:hint="성별" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/activitySpinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:entries="@array/pa"
+                    android:layout_marginRight="10dp"
+                    />
+
+                <TextView
+                    android:id="@+id/pa_result"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:textSize="18dp"
+                    android:gravity="center"
+                    android:hint="활동량"
+                    android:layout_toRightOf="@+id/activitySpinner"
+                    />
+            </RelativeLayout>
+        </LinearLayout>
+
 
         <Button
             android:id="@+id/checkButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Submit" />
+            android:layout_height="50dp"
+            android:textSize="25dp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/btn_purple"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="@font/font1"
+            android:layout_weight="1"
+            android:text="입력완료" />
+
 
     </LinearLayout>
+
 </LinearLayout>
