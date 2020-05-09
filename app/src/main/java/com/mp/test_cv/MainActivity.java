@@ -26,8 +26,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button btnInfo = (Button) findViewById(R.id.info);
-
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if(user == null) {
@@ -55,14 +53,6 @@ public class MainActivity extends AppCompatActivity {
             });
         }
         findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
-
-        btnInfo.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), NutritionInfoActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -73,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
                     FirebaseAuth.getInstance().signOut();
                     myStartActivity(SignUpActivity.class);
                     break;
+                case R.id.NutritionInfoButton:
+                    myStartActivity(NutritionInfoActivity.class);
             }
         }
     };
