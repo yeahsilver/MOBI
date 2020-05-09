@@ -31,8 +31,9 @@ public class NutritionInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_nutritioninfo);
 
         //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        findViewById(R.id.scan).setOnClickListener(onClickListener);
+        findViewById(R.id.submit).setOnClickListener(onClickListener);
     }
-
     View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -40,8 +41,6 @@ public class NutritionInfoActivity extends AppCompatActivity {
                 case R.id.scan:
                     myStartActivity(CameraView.class);
                     break;
-                case R.id.calculator:
-                    myStartActivity(NutritionInfoActivity.class);
                 case R.id.submit:
                     //calories = Integer.valueOf(((EditText)findViewById(R.id.editCal)).getText().toString());
                     carbohydrate = Integer.valueOf(((EditText)findViewById(R.id.editCarbo)).getText().toString());
@@ -59,22 +58,23 @@ public class NutritionInfoActivity extends AppCompatActivity {
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                    if (user != null){
                        // DailyIntake 생성
-                   db.collection("User").document(user.getUid())
-                           .set(inputIntake)
-                           .addOnSuccessListener(new OnSuccessListener<Void>() {
-                               @Override
-                               public void onSuccess(Void aVoid) {
-                                   startToast("정보 입력에 성공하였습니다.");
-                                   finish();
-                               }
-                           })
-                           .addOnFailureListener(new OnFailureListener() {
-                               @Override
-                               public void onFailure(@NonNull Exception e) {
-                                   startToast("정보 입력에 실패했습니다..");
-                                   Log.w(TAG, "Error writing document", e);
-                               }
-                         });
+                       db.collection("User").document(user.getUid())
+                               .collection("DailyIntake").document(user.getUid())
+                               .set(inputIntake)
+                               .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                   @Override
+                                   public void onSuccess(Void aVoid) {
+                                       startToast("정보 입력에 성공했습니다..");
+                                       finish();
+                                   }
+                               })
+                               .addOnFailureListener(new OnFailureListener() {
+                                   @Override
+                                   public void onFailure(@NonNull Exception e) {
+                                       startToast("정보 입력에 실패했습니다..");
+                                       Log.w(TAG, "Error writing document", e);
+                                   }
+                               });
                        }
                     }
                     else {

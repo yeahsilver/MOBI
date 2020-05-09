@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
             });
         }
         findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
+        findViewById(R.id.NutritionInfoButton).setOnClickListener(onClickListener);
     }
 
     View.OnClickListener onClickListener = new View.OnClickListener() {
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.NutritionInfoButton:
                     myStartActivity(NutritionInfoActivity.class);
+                    break;
             }
         }
     };

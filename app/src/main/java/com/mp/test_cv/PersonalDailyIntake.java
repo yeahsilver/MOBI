@@ -22,42 +22,52 @@ public class PersonalDailyIntake {
         this.perDietaryFiber = perDietaryFiber;
     }
 
-    public int getrecCalories() {
+    public int getperCalories() {
         return this.perCalories;
     }
-    public void setrecCalories(int perCalories) {
+    public void setperCalories(int perCalories) {
         this.perCalories = perCalories;
     }
-    public int getrecCarbohydrate() {
+    public int getperCarbohydrate() {
         return this.perCarbohydrate;
     }
-    public void setrecCarbohydrate(int perCarbohydrate) {
+    public void setperCarbohydrate(int perCarbohydrate) {
         this.perCarbohydrate = perCarbohydrate;
     }
-    public int getrecProtein() {
+    public int getperProtein() {
         return this.perProtein;
     }
-    public void setrecProtein(int perProtein) {
+    public void setperProtein(int perProtein) {
         this.perProtein = perProtein;
     }
-    public int getrecFat() {
+    public int getperFat() {
         return this.perFat;
     }
-    public void setrecFat(int perFat) { this.perFat = perFat; }
+    public void setperFat(int perFat) {
+        this.perFat = perFat;
+    }
     public int getperSaturatedFat() {
         return this.perSaturatedFat;
     }
-    public void setperSaturatedFat(int perSaturatedFat) { this.perSaturatedFat = perSaturatedFat; }
+    public void setperSaturatedFat(int perSaturatedFat) {
+        this.perSaturatedFat = perSaturatedFat;
+    }
     public int getperSugar() {
         return this.perSugar;
     }
-    public void setperSugar(int perSugar) { this.perSugar = perSugar; }
+    public void setperSugar(int perSugar) {
+        this.perSugar = perSugar;
+    }
     public int getperSodium() {
         return this.perSodium;
     }
-    public void setperSodium(int perSodium) { this.perSodium = perSodium; }
+    public void setperSodium(int perSodium) {
+        this.perSodium = perSodium;
+    }
     public int getperDietaryFiber() {
         return this.perDietaryFiber;
     }
-    public void setperDietaryFiber(int perDietaryFiber) { this.perDietaryFiber = perDietaryFiber; }
+    public void setperDietaryFiber(int perDietaryFiber) {
+        this.perDietaryFiber = perDietaryFiber;
+    }
 }

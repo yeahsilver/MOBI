@@ -17,14 +17,6 @@
         android:layout_height="wrap_content"
         android:background="@drawable/btn_edge_purple"
         android:text="logout" />
-
-    <Button
-        android:id="@+id/info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/btn_edge_purple"
-        android:text="상세정보 보기"
-        android:layout_marginTop="100dp"/>
     <Button
         android:id="@+id/NutritionInfoButton"
         android:layout_width="match_parent"

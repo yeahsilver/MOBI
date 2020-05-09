@@ -42,7 +42,7 @@
 
         </activity>
         <activity android:name=".NutritionInfoActivity"/>
-        <activity android:name="CameraView"/>
+        <activity android:name=".CameraView"/>
 
     </application>
     <supports-screens
