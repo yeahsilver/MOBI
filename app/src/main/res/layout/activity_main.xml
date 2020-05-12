@@ -21,5 +21,4 @@
         android:text="상세정보 보기"
         android:layout_marginTop="100dp"/>
 
-
 </RelativeLayout>

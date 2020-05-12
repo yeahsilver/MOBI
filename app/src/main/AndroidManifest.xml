@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mp.test_cv">
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -41,8 +43,11 @@
         <activity android:name=".MemberInitActivity">
 
         </activity>
-        <activity android:name=".NutritionInfo"/>
-        <activity android:name="CameraView"/>
+        <activity android:name=".NutritionInfo">
+
+        </activity>
+        <activity android:name=".CameraView">
+        </activity>
 
     </application>
     <supports-screens
@@ -51,7 +56,6 @@
         android:normalScreens="true"
         android:resizeable="true"
         android:smallScreens="true" />
-
     <uses-feature
         android:name="android.hardware.camera.front"
         android:required="false" />
@@ -64,9 +68,4 @@
     <uses-feature
         android:name="android.hardware.camera.autofocus"
         android:required="false" />
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-    <uses-permission android:name="android.permission.CAMERA" />
-
 </manifest>
