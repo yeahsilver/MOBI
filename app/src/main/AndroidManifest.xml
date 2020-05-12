@@ -48,7 +48,6 @@
         </activity>
         <activity android:name=".CameraView">
         </activity>
-
     </application>
     <supports-screens
         android:anyDensity="true"
