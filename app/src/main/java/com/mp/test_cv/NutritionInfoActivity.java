@@ -26,6 +26,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class NutritionInfoActivity extends AppCompatActivity {
     final String TAG = getClass().getSimpleName();
     PersonalDailyIntake inputIntake;
+    TotalDailyIntake inputTotal;
     int calories, carbohydrate, protein, fat, saturatedFat, sugar, sodium, dietaryFiber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,24 +54,30 @@ public class NutritionInfoActivity extends AppCompatActivity {
                     sodium = Integer.valueOf(((EditText)findViewById(R.id.editSodium)).getText().toString());
                     dietaryFiber = Integer.valueOf(((EditText)findViewById(R.id.editFiber)).getText().toString());
                     inputIntake = new PersonalDailyIntake(calories, carbohydrate, protein, fat, saturatedFat, sugar, sodium, dietaryFiber);
+                    inputTotal = new TotalDailyIntake(calories, carbohydrate, protein, fat, saturatedFat, sugar, sodium, dietaryFiber);
                     //사용자 정보 db 받고,inputIntake로 해당 정보들 갱신
                     //모든 정보 갱신 과정이 끝나면 mainActivity로 간다. (ui업데이트)
                     if (carbohydrate >= 0 && protein >= 0 && fat >= 0 && saturatedFat >= 0 && sugar >= 0 && sodium >= 0 && dietaryFiber >= 0 ) {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
+
                     Date today = new Date();
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
-                        String date = dateFormat.format(today);
+                    SimpleDateFormat timeFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+                    String time = timeFormat.format(today);
+                    String date = dateFormat.format(today);
+                    DocumentReference totalDB = db.collection("TotalDailyIntake").document(date);
+
                     if (user != null){
                        // DailyIntake 생성
                        db.collection("User").document(user.getUid())
-                               .collection("DailyIntake").document(date)
+                               .collection("DailyIntake").document(time)
                                .set(inputIntake)
                                .addOnSuccessListener(new OnSuccessListener<Void>() {
                                    @Override
                                    public void onSuccess(Void aVoid) {
                                        startToast("정보 입력에 성공했습니다..");
-                                       finish();
+                                       //finish();
                                    }
                                })
                                .addOnFailureListener(new OnFailureListener() {
@@ -80,6 +87,28 @@ public class NutritionInfoActivity extends AppCompatActivity {
                                        Log.w(TAG, "Error writing document", e);
                                    }
                                });
+                       // TotalDailyIntake 생성
+                        if(totalDB == null){
+                            db.collection("User").document(user.getUid())
+                                    .collection("TotalDailyIntake").document(date)
+                                    .set(inputTotal)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            startToast("정보 입력에 성공했습니다..");
+                                            finish();
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            startToast("정보 입력에 실패했습니다..");
+                                            Log.w(TAG, "Error writing document", e);
+                                        }
+                                    });
+                        }else{
+
+                        }
                        }
                     }
                     else {
