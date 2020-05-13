@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -56,10 +58,13 @@ public class NutritionInfoActivity extends AppCompatActivity {
                     if (carbohydrate >= 0 && protein >= 0 && fat >= 0 && saturatedFat >= 0 && sugar >= 0 && sodium >= 0 && dietaryFiber >= 0 ) {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
-                   if (user != null){
+                    Date today = new Date();
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+                        String date = dateFormat.format(today);
+                    if (user != null){
                        // DailyIntake 생성
                        db.collection("User").document(user.getUid())
-                               .collection("DailyIntake").document(user.getUid())
+                               .collection("DailyIntake").document(date)
                                .set(inputIntake)
                                .addOnSuccessListener(new OnSuccessListener<Void>() {
                                    @Override
