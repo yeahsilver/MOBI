@@ -9,13 +9,19 @@
     android:orientation="vertical"
     android:padding="20dp"
     >
-
+    <com.github.mikephil.charting.charts.CombinedChart
+        android:id="@+id/lineChart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" />
 
     <Button
         android:id="@+id/logoutButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/btn_edge_purple"
+        android:layout_marginTop="10dp"
         android:text="logout" />
 
     <Button
@@ -24,7 +30,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/btn_edge_purple"
         android:text="상세정보 보기"
-        android:layout_marginTop="100dp"/>
+        android:layout_marginTop="10dp"/>
 
 
 </LinearLayout>
