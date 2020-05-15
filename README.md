@@ -1,4 +1,5 @@
 # 🏃 모두의 헬스 케어 비서 - MOBI 
+> Notion: https://www.notion.so/MOBI-041d60cbe6864780a47d9ba9e671b8f8
 
 ## ✍️ 주요 기능
 
@@ -131,7 +132,7 @@
     - [Camera X](https://developer.android.com/training/camerax)
     
   - **오픈소스**
-   - [Android Chart](https://github.com/PhilJay/MPAndroidChart)
+    - [Android Chart](https://github.com/PhilJay/MPAndroidChart)
 
 
 
@@ -144,3 +145,4 @@
 - [2020년 4월 6일 월요일 회의록](./meeting-record/20200408.md)
 - [2020년 4월 27일 월요일 회의록](./meeting-record/20200427.md)
 - [2020년 5월 4일 월요일 회의록](./meeting-record/20200504.md)
+- [2020년 5월 13일 월요일 회의록](./meeting-record/20200513.md)
