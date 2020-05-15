@@ -9,6 +9,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,14 +22,20 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 public class NutritionInfoActivity extends AppCompatActivity {
     final String TAG = getClass().getSimpleName();
     PersonalDailyIntake inputIntake;
     TotalDailyIntake inputTotal;
     int calories, carbohydrate, protein, fat, saturatedFat, sugar, sodium, dietaryFiber;
+    Map<String, Object> docRefMap = new HashMap<String, Object> ();
+    FirebaseUser user;
+    FirebaseFirestore db;
+    String date;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,15 +66,16 @@ public class NutritionInfoActivity extends AppCompatActivity {
                     //사용자 정보 db 받고,inputIntake로 해당 정보들 갱신
                     //모든 정보 갱신 과정이 끝나면 mainActivity로 간다. (ui업데이트)
                     if (carbohydrate >= 0 && protein >= 0 && fat >= 0 && saturatedFat >= 0 && sugar >= 0 && sodium >= 0 && dietaryFiber >= 0 ) {
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    user = FirebaseAuth.getInstance().getCurrentUser();
+                    db = FirebaseFirestore.getInstance();
 
                     Date today = new Date();
                     SimpleDateFormat timeFormat = new SimpleDateFormat("yyyyMMddhhmmss");
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
                     String time = timeFormat.format(today);
-                    String date = dateFormat.format(today);
+                    date = dateFormat.format(today);
                     DocumentReference totalDB = db.collection("TotalDailyIntake").document(date);
+                    Log.d(TAG, "totalDB error : "+totalDB.equals(date));
 
                     if (user != null){
                        // DailyIntake 생성
@@ -77,7 +86,7 @@ public class NutritionInfoActivity extends AppCompatActivity {
                                    @Override
                                    public void onSuccess(Void aVoid) {
                                        startToast("정보 입력에 성공했습니다..");
-                                       //finish();
+                                       finish();
                                    }
                                })
                                .addOnFailureListener(new OnFailureListener() {
@@ -87,28 +96,52 @@ public class NutritionInfoActivity extends AppCompatActivity {
                                        Log.w(TAG, "Error writing document", e);
                                    }
                                });
-                       // TotalDailyIntake 생성
-                        if(totalDB == null){
-                            db.collection("User").document(user.getUid())
-                                    .collection("TotalDailyIntake").document(date)
-                                    .set(inputTotal)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            startToast("정보 입력에 성공했습니다..");
-                                            finish();
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            startToast("정보 입력에 실패했습니다..");
-                                            Log.w(TAG, "Error writing document", e);
-                                        }
-                                    });
-                        }else{
 
-                        }
+                        DocumentReference docRef = db.collection("User").document(user.getUid()).collection("TotalDailyIntake").document(date);
+                        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    Log.d(TAG, "Document: " + document);
+                                    docRefMap = document.getData();
+                                    if (document.exists()) {
+                                        Log.d(TAG, "docRefMap: " + docRefMap);
+
+                                    } else {
+                                        Log.d(TAG, "docRefMap: " + docRefMap);
+                                        Log.d(TAG, "No such document");
+                                    }
+                                } else {
+                                    Log.d(TAG, "get failed with ", task.getException());
+                                }
+                                Log.d(TAG, "why~~~~~~~~~");
+                                // TotalDailyIntake 생성
+                                if(docRefMap == null){
+                                    db.collection("User").document(user.getUid())
+                                            .collection("TotalDailyIntake").document(date)
+                                            .set(inputTotal)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    startToast("정보 입력에 성공했습니다..");
+                                                    finish();
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    startToast("정보 입력에 실패했습니다..");
+                                                    Log.w(TAG, "Error writing document", e);
+                                                }
+                                            });
+                                }else{
+
+                                }
+                            }
+                        });
+
+
                        }
                     }
                     else {
