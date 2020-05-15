@@ -10,6 +10,7 @@ import android.hardware.camera2.CameraDevice;
 import android.media.ImageReader;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -75,17 +76,12 @@ public class OCRScanActivity extends AppCompatActivity {
         //캡처하면 이미지 처리를 capture()함수로 한다.
 
         tessBaseAPI = new TessBaseAPI();
-        //tesseract 인식 언어를 설정 및 초기화
-        dataPath = getFilesDir() + "/tesseract";
-        lang = "kor+eng";
-
-        // checkFile(new File(dataPath + "/tessdata"), "kor");
-        //checkFile(new File(dataPath + "/tessdata"), "eng");
-
-        //tessBaseAPI.init(dataPath, lang);
-        String dir = getFilesDir() + "/tesseract";
-        if(checkLanguageFile(dir+"/tessdata"))
-            tessBaseAPI.init(dir, "eng");
+        String dir = getFilesDir()+"/tesseract";
+        if(checkLanguageFile(dir+"/tessdata")){
+            tessBaseAPI.init("/tessdata","eng");
+        } else {
+            Toast.makeText(this, dir + " isn't found", Toast.LENGTH_SHORT).show();
+        }
 
         // Example of a call to a native method
         //processImage(BitmapFactory.decodeResource(getResources(), R.drawable.nutrition_facts));

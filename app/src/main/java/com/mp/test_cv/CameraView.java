@@ -3,20 +3,27 @@ package com.mp.test_cv;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Camera;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.util.Rational;
 import android.util.Size;
 import android.util.SparseIntArray;
 import android.view.Surface;
+import android.view.SurfaceHolder;
 import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
@@ -25,20 +32,33 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraX;
+import androidx.camera.core.ImageAnalysis;
+import androidx.camera.core.ImageAnalysisConfig;
 import androidx.camera.core.ImageCapture;
 import androidx.camera.core.ImageCaptureConfig;
+import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
 import androidx.camera.core.PreviewConfig;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.ml.vision.FirebaseVision;
+import com.google.firebase.ml.vision.common.FirebaseVisionImage;
+import com.google.firebase.ml.vision.document.FirebaseVisionDocumentText;
+import com.google.firebase.ml.vision.document.FirebaseVisionDocumentTextRecognizer;
 import com.mp.test_cv.camera.DrawGuideline;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CameraView extends AppCompatActivity {
     private TextureView textureView;
     private FrameLayout frameLayout;
+
+    private static final String TAG = "CameraView";
 
     private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
     static {
@@ -48,8 +68,8 @@ public class CameraView extends AppCompatActivity {
         ORIENTATIONS.append(ExifInterface.ORIENTATION_ROTATE_270, 270);
     }
 
+    int REQUEST_IMAGE_CAPTURE = 1;
     int REQUESTCODE = 300;
-
 
     static final int PERMISSIONS_REQUEST_CODE = 101;
     String[] PERMISSIONS = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
@@ -84,7 +104,7 @@ public class CameraView extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUESTCODE){
             if(requestCode == RESULT_OK){
-                setResult(RESULT_OK);
+                 setResult(RESULT_OK);
                 finish();
             }
         }
@@ -144,6 +164,7 @@ public class CameraView extends AppCompatActivity {
         final ImageCapture imageCapture = new ImageCapture(imageCaptureConfig);
 
         findViewById(R.id.shoot).setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 File file = new File(getFilesDir(),"temp.png");
@@ -152,6 +173,8 @@ public class CameraView extends AppCompatActivity {
                     public void onImageSaved(@NonNull File file) {
                         String msg = "Pic captured at " + file.getAbsolutePath();
                         Toast.makeText(getBaseContext(),msg,Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(CameraView.this, PreviewActivity.class);
+                        startActivity(intent);
                     }
 
                     @Override
@@ -166,6 +189,7 @@ public class CameraView extends AppCompatActivity {
                 });
             }
         });
+
         CameraX.bindToLifecycle(this, preview, imageCapture);
     }
 
@@ -202,6 +226,5 @@ public class CameraView extends AppCompatActivity {
 
         matrix.postRotate((float)rotationDgr, cx,cy);
         textureView.setTransform(matrix);
-
     }
 }

@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Button btnInfo = findViewById(R.id.NutritionInfoButton);
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if(user == null) {
@@ -57,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         btnInfo.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), NutritionInfo.class);
+                Intent intent = new Intent(MainActivity.this, NutritionInfoActivity.class);
                 startActivity(intent);
             }
         });
