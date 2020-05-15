@@ -26,6 +26,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.FieldValue;
 
 public class NutritionInfoActivity extends AppCompatActivity {
     final String TAG = getClass().getSimpleName();
@@ -115,7 +116,6 @@ public class NutritionInfoActivity extends AppCompatActivity {
                                 } else {
                                     Log.d(TAG, "get failed with ", task.getException());
                                 }
-                                Log.d(TAG, "why~~~~~~~~~");
                                 // TotalDailyIntake 생성
                                 if(docRefMap == null){
                                     db.collection("User").document(user.getUid())
@@ -136,12 +136,20 @@ public class NutritionInfoActivity extends AppCompatActivity {
                                                 }
                                             });
                                 }else{
-
+                                    // TotalDailyIntake Increment
+                                    DocumentReference tdb = db.collection("User").document(user.getUid())
+                                            .collection("TotalDailyIntake").document(date);
+                                    tdb.update("totalCalories", FieldValue.increment(calories));
+                                    tdb.update("totalCarbohydrate", FieldValue.increment(carbohydrate));
+                                    tdb.update("totalDietaryFiber", FieldValue.increment(dietaryFiber));
+                                    tdb.update("totalFat", FieldValue.increment(protein));
+                                    tdb.update("totalProtein", FieldValue.increment(fat));
+                                    tdb.update("totalSaturatedFat", FieldValue.increment(saturatedFat));
+                                    tdb.update("totalSodium", FieldValue.increment(sugar));
+                                    tdb.update("totalSugar", FieldValue.increment(sodium));
                                 }
                             }
                         });
-
-
                        }
                     }
                     else {
