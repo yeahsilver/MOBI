@@ -56,4 +56,6 @@ dependencies {
     def cameraxVersion = "1.0.0-alpha02"
     implementation "androidx.camera:camera-core:${cameraxVersion}"
     implementation "androidx.camera:camera-camera2:${cameraxVersion}"
+    // MPAndroid Chart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 }
