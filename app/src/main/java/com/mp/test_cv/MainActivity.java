@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.ScatterChart;
 import com.github.mikephil.charting.components.Description;
@@ -48,14 +49,19 @@ import com.github.mikephil.charting.data.ScatterDataSet;
 import com.github.mikephil.charting.interfaces.datasets.IDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
@@ -75,15 +81,18 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.github.mikephil.charting.charts.CombinedChart;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     FirebaseUser user;
     FirebaseFirestore db;
     String date;
-
+    Map<String, Integer> totNutritionMap = new HashMap<String, Integer>(); //Nutrition과 섭취량을 매핑할 변수 생성
+    Map<String, Integer> recNutritionMap = new HashMap<String, Integer>();
 
     private CombinedChart chart;
 
@@ -93,14 +102,61 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
-
-        HashMap<String, Integer> totNutrition = new HashMap<String, Integer>();
-        HashMap<String, Integer> recNutrition = new HashMap<String, Integer>();
+        Date today = new Date();
+        SimpleDateFormat timeFormat = new SimpleDateFormat("yyyyMMddhhmmss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        String time = timeFormat.format(today);
+        date = dateFormat.format(today);
 
         findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
         findViewById(R.id.NutritionInfoButton).setOnClickListener(onClickListener);
+        if (user != null){
+            // DailyIntake 생성
+            final DocumentReference docRef = db.collection("User").document(user.getUid()).collection("TotalDailyIntake").document(date);
+            docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    TotalDailyIntake totalDailyIntake = documentSnapshot.toObject(TotalDailyIntake.class);
+                    if (totalDailyIntake == null) {
+                        //totalDailyintake초기화
+                        totalDailyIntake = new TotalDailyIntake(0,0,0,0,0,0,0,0);
+                        /*docRef.set(totalDailyIntake)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        startToast("정보 입력에 성공했습니다..");
+                                        finish();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        startToast("정보 입력에 실패했습니다..");
+                                        Log.w(TAG, "Error writing document", e);
+                                    }
+                                });*/
+                        startToast("총섭취량 데이터 zero 초기화.");
 
-
+                    }
+                    totNutritionMap.put("calories", totalDailyIntake.gettotalCalories());
+                    totNutritionMap.put("carbohydrate", totalDailyIntake.gettotalCarbohydrate());
+                    totNutritionMap.put("protein", totalDailyIntake.gettotalProtein());
+                    totNutritionMap.put("fat", totalDailyIntake.gettotalFat());
+                    totNutritionMap.put("saturatedFat", totalDailyIntake.gettotalSaturatedFat());
+                    totNutritionMap.put("sugar", totalDailyIntake.gettotalSugar());
+                    totNutritionMap.put("sodium", totalDailyIntake.gettotalSodium());
+                    totNutritionMap.put("dietaryfiber", totalDailyIntake.gettotalDietaryFiber());
+                    //후에 get으로 성분별 데이터 가져올 수 있음.
+                }
+            });
+        }
+        else {
+            startToast("사용자정보를 입력하세요.");
+        }
+        //totlDailyIntake data에서 totalCalories / recDatilyIntake에서 recCalories
+        int totalCal;
+        int recCal;
+        int caloriePercent;
         // TODO : 각종 수치들 변수로 바꾸기
         // 칼로리 내역 표시
         TextView textCaloriePercent = (TextView) findViewById(R.id.textCaloriePercent);
@@ -114,8 +170,6 @@ public class MainActivity extends AppCompatActivity {
         updateChartActivity(R.id.carboChart);   // 탄수화물 섭취 현황 차트
         TextView textCarbo = (TextView) findViewById(R.id.textCarbo);
         textCarbo.setText("탄수화물\n오늘 권장탄수화물의 120%를\n섭취하셨습니다.\n권장섭취량 : 100g\n실제섭취량 : 120g\n");
-
-
     }
 
 
@@ -142,8 +196,9 @@ public class MainActivity extends AppCompatActivity {
         //로그인 한 상태에서 뒤로가기 눌렀을 때 메인액티비로 이동, 나머지 스택 없어짐.
         startActivity(intent);
     }
-
-
+    private void startToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
     // 그래프 그리기
     private void updateChartActivity(int id){
         chart = findViewById(id);

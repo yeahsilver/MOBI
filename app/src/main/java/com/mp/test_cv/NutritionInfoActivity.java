@@ -124,14 +124,14 @@ public class NutritionInfoActivity extends AppCompatActivity {
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
-                                                    startToast("정보 입력에 성공했습니다..");
+                                                    startToast("정보를 초기화했습니다.");
                                                     finish();
                                                 }
                                             })
                                             .addOnFailureListener(new OnFailureListener() {
                                                 @Override
                                                 public void onFailure(@NonNull Exception e) {
-                                                    startToast("정보 입력에 실패했습니다..");
+                                                    startToast("정보 초기화를 실패했습니다.");
                                                     Log.w(TAG, "Error writing document", e);
                                                 }
                                             });
