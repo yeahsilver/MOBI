@@ -68,14 +68,14 @@
         android:layout_marginBottom="10dp"
         android:layout_weight="0.1"
         >
+
         <ImageView
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:background="@null"
-            android:src="@drawable/person_icon"
-            android:padding="10dp"
             android:layout_alignParentLeft="true"
-            />
+            android:background="@null"
+            android:padding="10dp"
+            android:src="@drawable/person_icon" />
 
         <TextView
             android:layout_width="wrap_content"
