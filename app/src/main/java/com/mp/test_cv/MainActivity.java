@@ -175,22 +175,23 @@ public class MainActivity extends AppCompatActivity {
             startToast("사용자정보를 입력하세요.");
         }
         //totlDailyIntake data에서 totalCalories / recDatilyIntake에서 recCalories
-        int totalCal;
-        int recCal;
-        int caloriePercent;
+        int caloriePercent = totNutritionMap.get("calories") / recNutritionMap.get("calories");
+        int carboPercent = totNutritionMap.get("carbohydrate") / recNutritionMap.get("carbohydrate");
         // TODO : 각종 수치들 변수로 바꾸기
         // 칼로리 내역 표시
         TextView textCaloriePercent = (TextView) findViewById(R.id.textCaloriePercent);
         TextView textRealCalorie = (TextView) findViewById(R.id.textRealCalorie);
         TextView textRecommendedCalorie = (TextView) findViewById(R.id.textRecommendedCalorie);
-        textCaloriePercent.setText("오늘 권장칼로리의 70%를\n섭취하셨습니다.");
-        textRealCalorie.setText("총 섭취 칼로리 : 1400kcal");
-        textRecommendedCalorie.setText("권장 섭취 칼로리 : 2000kcal");
+        textCaloriePercent.setText("오늘 권장칼로리의 "+carboPercent+"%를\n섭취하셨습니다.");
+        textRealCalorie.setText("총 섭취 칼로리 : "+totNutritionMap.get("calories")+"kcal");
+        textRecommendedCalorie.setText("권장 섭취 칼로리 : "+recNutritionMap.get("calories")+"kcal");
 
         // 탄수화물 섭취 내역
         updateChartActivity(R.id.carboChart);   // 탄수화물 섭취 현황 차트
         TextView textCarbo = (TextView) findViewById(R.id.textCarbo);
-        textCarbo.setText("탄수화물\n오늘 권장탄수화물의 120%를\n섭취하셨습니다.\n권장섭취량 : 100g\n실제섭취량 : 120g\n");
+        textCarbo.setText("탄수화물\n오늘 권장탄수화물의 "+carboPercent
+                +"%를\n섭취하셨습니다.\n권장섭취량 : "+recNutritionMap.get("carbohydrate")+
+                "g\n실제섭취량 : "+totNutritionMap.get("carbohydrate")+"g\n");
     }
 
 
