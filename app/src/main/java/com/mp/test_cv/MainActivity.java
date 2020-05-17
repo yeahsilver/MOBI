@@ -112,8 +112,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.NutritionInfoButton).setOnClickListener(onClickListener);
         if (user != null){
             // DailyIntake 생성
-            final DocumentReference docRef = db.collection("User").document(user.getUid()).collection("TotalDailyIntake").document(date);
-            docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            final DocumentReference docRef = db.collection("User").document(user.getUid());
+            docRef.collection("TotalDailyIntake").document(date).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     TotalDailyIntake totalDailyIntake = documentSnapshot.toObject(TotalDailyIntake.class);
@@ -147,6 +147,27 @@ public class MainActivity extends AppCompatActivity {
                     totNutritionMap.put("sodium", totalDailyIntake.gettotalSodium());
                     totNutritionMap.put("dietaryfiber", totalDailyIntake.gettotalDietaryFiber());
                     //후에 get으로 성분별 데이터 가져올 수 있음.
+                }
+            });
+            docRef.collection("RecDailyIntake").document(user.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    RecDailyIntake recDailyIntake = documentSnapshot.toObject(RecDailyIntake.class);
+                    if (recDailyIntake == null) {
+                        //totalDailyintake초기화
+                        startToast("사용자 데이터가 없습니다.");
+                    }
+                    else {
+                        recNutritionMap.put("calories", recDailyIntake.getrecCalories());
+                        recNutritionMap.put("carbohydrate", recDailyIntake.getrecCarbohydrate());
+                        recNutritionMap.put("protein", recDailyIntake.getrecProtein());
+                        recNutritionMap.put("fat", recDailyIntake.getrecFat());
+                        //recNutritionMap.put("saturatedFat", recDailyIntake.getrecSaturatedFat());
+                        //recNutritionMap.put("sugar", recDailyIntake.getrecSugar());
+                        //recNutritionMap.put("sodium", recDailyIntake.getrecSodium());
+                        //recNutritionMap.put("dietaryfiber", recDailyIntake.getrecDietaryFiber());
+                        //후에 get으로 성분별 데이터 가져올 수 있음.
+                    }
                 }
             });
         }
