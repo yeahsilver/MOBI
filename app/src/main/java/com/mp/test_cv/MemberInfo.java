@@ -13,6 +13,7 @@ public class MemberInfo {
         this.activityMeasure = activityMeasure;
         this.gender = gender;
     }
+    public MemberInfo() {}
 
     public float getHeight() {
         return this.height;

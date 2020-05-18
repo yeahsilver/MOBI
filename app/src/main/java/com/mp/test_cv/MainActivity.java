@@ -30,6 +30,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
+import java.lang.reflect.Member;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -44,9 +45,11 @@ public class MainActivity extends AppCompatActivity {
     String date;
     Map<String, Integer> totNutritionMap; //Nutrition과 섭취량을 매핑할 변수 생성
     Map<String, Integer> recNutritionMap;
+    MemberInfo userInfo;
+    float userBMI;
     boolean isTotalLoaded;
     boolean isRecommendLoaded;
-
+    boolean isUserLoaded;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +100,22 @@ public class MainActivity extends AppCompatActivity {
                             Log.d(TAG, "No such document");
                             startToast("섭취량을 기록해주세요. 아직 없다면 수정완료를 눌러주세요");
                         }
+                    }
+                }
+            });
+            docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    MemberInfo memberInfo = documentSnapshot.toObject(MemberInfo.class);
+                    if (documentSnapshot.exists()) {
+                        userInfoSetUp(memberInfo);
+                        BMIinfoSetting();
+                        Log.d(TAG, "DocumentSnapshot data: " + documentSnapshot.getData());
+                    }
+                    else{
+                        myStartActivity(SignUpActivity.class);
+                        Log.d(TAG, "No such document");
+                        startToast("회원가입을 해주세요.");
                     }
                 }
             });
@@ -206,6 +225,7 @@ public class MainActivity extends AppCompatActivity {
             // 탄수화물 섭취 내역
             updateChartActivity();   // 탄수화물 섭취 현황 차트
             carbohydrateTextView(carbohydratePercent);
+            BMIinfoSetting();
         } else {
             calorieTextView(0);
             carbohydrateTextView(0);
@@ -251,6 +271,27 @@ public class MainActivity extends AppCompatActivity {
         //후에 get으로 성분별 데이터 가져올 수 있음.
         isRecommendLoaded = true;
     }
+    private void BMIinfoSetting() {
+        if (!isUserLoaded) {
+            this.userBMI = 0;
+            return;
+        }
+        else {
+            this.userBMI = userInfo.getWeight() / (float)Math.pow(userInfo.getHeight() / 100, 2);
+            TextView bmiView = (TextView)findViewById(R.id.BMI_info);
+            bmiView.setText("BMI: " + userBMI + "\n");
+        }
+    }
+    private void userInfoSetUp(MemberInfo userInfo) {
+        if (userInfo == null) {
+            myStartActivity(MemberInitActivity.class);
+            return;
+        }
+        else {
+            this.userInfo = userInfo;
+            isUserLoaded = true;
+        }
+    }
     // BarData : 실제 섭취량
     private BarData generateBarData(float realIntake) {
 
@@ -270,7 +311,6 @@ public class MainActivity extends AppCompatActivity {
 
         return d;
     }
-
     // ScatterData : 권장 섭취량
     private ScatterData generateScatterData(float recommendedIntake) {
 
