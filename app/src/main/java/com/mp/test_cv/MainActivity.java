@@ -252,19 +252,18 @@ public class MainActivity extends AppCompatActivity {
         }
         if (recNutritionMap.get("calories") != null && recNutritionMap.get("carbohydrate") != null) {
             int caloriePercent = totNutritionMap.get("calories") / recNutritionMap.get("calories");
-            int carboPercent = totNutritionMap.get("carbohydrate") / recNutritionMap.get("carbohydrate");
+            int carbohydratePercent = totNutritionMap.get("carbohydrate") / recNutritionMap.get("carbohydrate");
             // TODO : 각종 수치들 변수로 바꾸기
             // 칼로리 내역 표시
             calorieTextView(caloriePercent);
             // 탄수화물 섭취 내역
             updateChartActivity();   // 탄수화물 섭취 현황 차트
-            TextView textCarbo = (TextView) findViewById(R.id.textCarbo);
-            textCarbo.setText("탄수화물\n오늘 권장탄수화물의 " + carboPercent
-                    + "%를\n섭취하셨습니다.\n권장섭취량 : " + recNutritionMap.get("carbohydrate") +
-                    "g\n실제섭취량 : " + totNutritionMap.get("carbohydrate") + "g\n");
+            carbohydrateTextView(carbohydratePercent);
         } else {
-            TextView textCaloriePercent = (TextView) findViewById(R.id.textCaloriePercent);
-            textCaloriePercent.setText("오늘 권장칼로리의%를\n섭취하셨습니다.");
+            calorieTextView(0);
+            carbohydrateTextView(0);
+            startToast("사용자 정보가 없습니다.");
+            myStartActivity(MemberInitActivity.class);
         }
     }
     private void calorieTextView(int caloriePercent) {
@@ -274,6 +273,12 @@ public class MainActivity extends AppCompatActivity {
         textCaloriePercent.setText("오늘 권장칼로리의 " + caloriePercent + "%를\n섭취하셨습니다.");
         textRealCalorie.setText("총 섭취 칼로리 : " + totNutritionMap.get("calories") + "kcal");
         textRecommendedCalorie.setText("권장 섭취 칼로리 : " + recNutritionMap.get("calories") + "kcal");
+    }
+    private void carbohydrateTextView(int carbohydratePercent) {
+        TextView textCarbo = (TextView) findViewById(R.id.textCarbo);
+        textCarbo.setText("탄수화물\n오늘 권장탄수화물의 " + carbohydratePercent
+                + "%를\n섭취하셨습니다.\n권장섭취량 : " + recNutritionMap.get("carbohydrate") +
+                "g\n실제섭취량 : " + totNutritionMap.get("carbohydrate") + "g\n");
     }
     // BarData : 실제 섭취량
     private BarData generateBarData(float realIntake) {
