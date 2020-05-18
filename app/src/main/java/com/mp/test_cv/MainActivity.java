@@ -198,16 +198,18 @@ public class MainActivity extends AppCompatActivity {
 
         // TODO : min, max 세팅 영양소별로 다르게 해줘야함
         leftAxis.setAxisMinimum(0f);
-        leftAxis.setAxisMaximum(200f);
+        leftAxis.setAxisMaximum(2000f);
 
         YAxis rightAxis = chart.getAxisRight();
         rightAxis.setEnabled(false);
 
 
         // 그래프 그리기
+        int realIntake = totNutritionMap.get("carbohydrate");
+        int recommendedIntake = recNutritionMap.get("carbohydrate");
         CombinedData data = new CombinedData();
-        data.setData(generateBarData(120f));
-        data.setData(generateScatterData(100f));
+        data.setData(generateBarData(realIntake));
+        data.setData(generateScatterData(recommendedIntake));
 
         chart.setData(data);
         chart.invalidate();
