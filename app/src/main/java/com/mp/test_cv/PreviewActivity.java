@@ -1,11 +1,11 @@
 package com.mp.test_cv;
 
-import android.content.Intent;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.os.AsyncTask;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -19,26 +19,17 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.Request;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.CustomTarget;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.request.transition.Transition;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.ml.common.FirebaseMLException;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.document.FirebaseVisionDocumentText;
 import com.google.firebase.ml.vision.document.FirebaseVisionDocumentTextRecognizer;
 
 import java.io.File;
-import java.io.Serializable;
-import java.util.ArrayList;
+import java.io.IOError;
+import java.io.IOException;
 import java.util.List;
 
 public class PreviewActivity extends AppCompatActivity {
@@ -81,21 +72,33 @@ public class PreviewActivity extends AppCompatActivity {
                 .into(preview);
     }
 
+
         private void runCloudTextRecognition(){
             bitmap = GetBitmapFromInternal();
+
             FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(bitmap);
+
             FirebaseVisionDocumentTextRecognizer recognizer = FirebaseVision.getInstance().getCloudDocumentTextRecognizer();
+
+
             recognizer.processImage(image).addOnSuccessListener(new OnSuccessListener<FirebaseVisionDocumentText>() {
                 @Override
                 public void onSuccess(FirebaseVisionDocumentText firebaseVisionDocumentText) {
                     processCloudTextRecognitionResult(firebaseVisionDocumentText);
                 }
             }).addOnFailureListener(new OnFailureListener() {
+
                 @Override
                 public void onFailure(@NonNull Exception e) {
+                    failRecognize();
                     e.printStackTrace();
                 }
             });
+        }
+
+        private void failRecognize(){
+            Toast.makeText(this, "fail", Toast.LENGTH_SHORT).show();
+
         }
 
         private void processCloudTextRecognitionResult(FirebaseVisionDocumentText text) {
@@ -111,7 +114,6 @@ public class PreviewActivity extends AppCompatActivity {
             }
         }
 
-
         private Bitmap GetBitmapFromInternal(){
             File storage = getFilesDir();
             File tempFile = new File(storage,"temp.png");
@@ -121,4 +123,6 @@ public class PreviewActivity extends AppCompatActivity {
         private File GetFileFromInternal(){
             return new File(getFilesDir(),"temp.png");
         }
+
+
 }
