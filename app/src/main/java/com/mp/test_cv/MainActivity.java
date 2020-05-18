@@ -1,107 +1,59 @@
 package com.mp.test_cv;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.res.AssetManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Matrix;
-import android.hardware.Camera;
-import android.hardware.camera2.CameraDevice;
-import android.hardware.camera2.CameraManager;
-import android.media.Image;
-import android.media.ImageReader;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.ScatterChart;
-import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.BubbleData;
-import com.github.mikephil.charting.data.BubbleDataSet;
-import com.github.mikephil.charting.data.BubbleEntry;
-import com.github.mikephil.charting.data.CandleData;
-import com.github.mikephil.charting.data.CandleDataSet;
-import com.github.mikephil.charting.data.CandleEntry;
 import com.github.mikephil.charting.data.CombinedData;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.ScatterData;
 import com.github.mikephil.charting.data.ScatterDataSet;
-import com.github.mikephil.charting.interfaces.datasets.IDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import org.opencv.android.OpenCVLoader;
-import org.opencv.android.Utils;
-import org.opencv.core.Mat;
-import org.opencv.core.MatOfPoint;
-import org.opencv.core.Point;
-import org.opencv.core.Rect;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
-import org.w3c.dom.Text;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import com.github.mikephil.charting.charts.CombinedChart;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    FirebaseUser user;
-    FirebaseFirestore db;
     String date;
-    Map<String, Integer> totNutritionMap = new HashMap<String, Integer>(); //Nutrition과 섭취량을 매핑할 변수 생성
-    Map<String, Integer> recNutritionMap = new HashMap<String, Integer>();
-
-    private CombinedChart chart;
+    Map<String, Integer> totNutritionMap; //Nutrition과 섭취량을 매핑할 변수 생성
+    Map<String, Integer> recNutritionMap;
+    boolean isTotalLoaded;
+    boolean isRecommendLoaded;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        user = FirebaseAuth.getInstance().getCurrentUser();
+        totNutritionMap = new HashMap<String, Integer>();
+        recNutritionMap = new HashMap<String, Integer>();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         Date today = new Date();
         SimpleDateFormat timeFormat = new SimpleDateFormat("yyyyMMddhhmmss");
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
@@ -110,16 +62,31 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
         findViewById(R.id.NutritionInfoButton).setOnClickListener(onClickListener);
-        if (user != null){
+        if (user != null) {
             // DailyIntake 생성
-            final DocumentReference docRef = db.collection("User").document(user.getUid());
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            DocumentReference docRef = db.collection("User").document(user.getUid());
             docRef.collection("TotalDailyIntake").document(date).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     TotalDailyIntake totalDailyIntake = documentSnapshot.toObject(TotalDailyIntake.class);
-                    if (totalDailyIntake == null) {
-                        //totalDailyintake초기화
-                        totalDailyIntake = new TotalDailyIntake(0,0,0,0,0,0,0,0);
+                    if (documentSnapshot != null) {
+                        if (documentSnapshot.exists()) {
+                            totNutritionMap.put("calories", totalDailyIntake.gettotalCalories());
+                            totNutritionMap.put("carbohydrate", totalDailyIntake.gettotalCarbohydrate());
+                            totNutritionMap.put("protein", totalDailyIntake.gettotalProtein());
+                            totNutritionMap.put("fat", totalDailyIntake.gettotalFat());
+                            totNutritionMap.put("saturatedFat", totalDailyIntake.gettotalSaturatedFat());
+                            totNutritionMap.put("sugar", totalDailyIntake.gettotalSugar());
+                            totNutritionMap.put("sodium", totalDailyIntake.gettotalSodium());
+                            totNutritionMap.put("dietaryfiber", totalDailyIntake.gettotalDietaryFiber());
+                            //후에 get으로 성분별 데이터 가져올 수 있음.
+                            Log.d(TAG, "DocumentSnapshot data: " + documentSnapshot.getData());
+                            isTotalLoaded = true;
+                            textSetUpProcess();
+                        } else {
+                            Log.d(TAG, "No such document");
+                            totalDailyIntake = new TotalDailyIntake(0, 0, 0, 0, 0, 0, 0, 0);
                         /*docRef.set(totalDailyIntake)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
@@ -135,63 +102,62 @@ public class MainActivity extends AppCompatActivity {
                                         Log.w(TAG, "Error writing document", e);
                                     }
                                 });*/
-                        startToast("총섭취량 데이터 zero 초기화.");
-
+                            startToast("총섭취량 데이터 zero 초기화.");
+                        }
                     }
-                    totNutritionMap.put("calories", totalDailyIntake.gettotalCalories());
-                    totNutritionMap.put("carbohydrate", totalDailyIntake.gettotalCarbohydrate());
-                    totNutritionMap.put("protein", totalDailyIntake.gettotalProtein());
-                    totNutritionMap.put("fat", totalDailyIntake.gettotalFat());
-                    totNutritionMap.put("saturatedFat", totalDailyIntake.gettotalSaturatedFat());
-                    totNutritionMap.put("sugar", totalDailyIntake.gettotalSugar());
-                    totNutritionMap.put("sodium", totalDailyIntake.gettotalSodium());
-                    totNutritionMap.put("dietaryfiber", totalDailyIntake.gettotalDietaryFiber());
-                    //후에 get으로 성분별 데이터 가져올 수 있음.
                 }
             });
             docRef.collection("RecDailyIntake").document(user.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     RecDailyIntake recDailyIntake = documentSnapshot.toObject(RecDailyIntake.class);
-                    if (recDailyIntake == null) {
-                        //totalDailyintake초기화
-                        startToast("사용자 데이터가 없습니다.");
-                    }
-                    else {
-                        recNutritionMap.put("calories", recDailyIntake.getrecCalories());
-                        recNutritionMap.put("carbohydrate", recDailyIntake.getrecCarbohydrate());
-                        recNutritionMap.put("protein", recDailyIntake.getrecProtein());
-                        recNutritionMap.put("fat", recDailyIntake.getrecFat());
-                        //recNutritionMap.put("saturatedFat", recDailyIntake.getrecSaturatedFat());
-                        //recNutritionMap.put("sugar", recDailyIntake.getrecSugar());
-                        //recNutritionMap.put("sodium", recDailyIntake.getrecSodium());
-                        //recNutritionMap.put("dietaryfiber", recDailyIntake.getrecDietaryFiber());
-                        //후에 get으로 성분별 데이터 가져올 수 있음.
+                    if (documentSnapshot != null) {
+                        if (documentSnapshot.exists()) {
+                            Log.d(TAG, "recDailyCalorie:" + recDailyIntake.getrecCalories());
+                            recNutritionMap.put("calories", recDailyIntake.getrecCalories());
+                            recNutritionMap.put("carbohydrate", recDailyIntake.getrecCarbohydrate());
+                            recNutritionMap.put("protein", recDailyIntake.getrecProtein());
+                            recNutritionMap.put("fat", recDailyIntake.getrecFat());
+                            //recNutritionMap.put("saturatedFat", recDailyIntake.getrecSaturatedFat());
+                            //recNutritionMap.put("sugar", recDailyIntake.getrecSugar());
+                            //recNutritionMap.put("sodium", recDailyIntake.getrecSodium());
+                            //recNutritionMap.put("dietaryfiber", recDailyIntake.getrecDietaryFiber());
+                            //후에 get으로 성분별 데이터 가져올 수 있음.
+                            isRecommendLoaded = true;
+                            textSetUpProcess();
+
+
+
+                            Log.d(TAG, "DocumentSnapshot data: " + documentSnapshot.getData());
+                        } else {
+                            myStartActivity(MemberInitActivity.class);
+                            Log.d(TAG, "No such document");
+                        /*docRef.set(totalDailyIntake)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        startToast("정보 입력에 성공했습니다..");
+                                        finish();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        startToast("정보 입력에 실패했습니다..");
+                                        Log.w(TAG, "Error writing document", e);
+                                    }
+                                });*/
+                            startToast("총섭취량 데이터 zero 초기화.");
+                        }
                     }
                 }
             });
+            //totlDailyIntake data에서 totalCalories / recDatilyIntake에서 recCalorie
+        } else {
+            myStartActivity(SignUpActivity.class);
+            startToast("로그인을 해주세요.");
         }
-        else {
-            startToast("사용자정보를 입력하세요.");
-        }
-        //totlDailyIntake data에서 totalCalories / recDatilyIntake에서 recCalories
-        int caloriePercent = totNutritionMap.get("calories") / recNutritionMap.get("calories");
-        int carboPercent = totNutritionMap.get("carbohydrate") / recNutritionMap.get("carbohydrate");
-        // TODO : 각종 수치들 변수로 바꾸기
-        // 칼로리 내역 표시
-        TextView textCaloriePercent = (TextView) findViewById(R.id.textCaloriePercent);
-        TextView textRealCalorie = (TextView) findViewById(R.id.textRealCalorie);
-        TextView textRecommendedCalorie = (TextView) findViewById(R.id.textRecommendedCalorie);
-        textCaloriePercent.setText("오늘 권장칼로리의 "+carboPercent+"%를\n섭취하셨습니다.");
-        textRealCalorie.setText("총 섭취 칼로리 : "+totNutritionMap.get("calories")+"kcal");
-        textRecommendedCalorie.setText("권장 섭취 칼로리 : "+recNutritionMap.get("calories")+"kcal");
 
-        // 탄수화물 섭취 내역
-        updateChartActivity(R.id.carboChart);   // 탄수화물 섭취 현황 차트
-        TextView textCarbo = (TextView) findViewById(R.id.textCarbo);
-        textCarbo.setText("탄수화물\n오늘 권장탄수화물의 "+carboPercent
-                +"%를\n섭취하셨습니다.\n권장섭취량 : "+recNutritionMap.get("carbohydrate")+
-                "g\n실제섭취량 : "+totNutritionMap.get("carbohydrate")+"g\n");
     }
 
 
@@ -218,12 +184,14 @@ public class MainActivity extends AppCompatActivity {
         //로그인 한 상태에서 뒤로가기 눌렀을 때 메인액티비로 이동, 나머지 스택 없어짐.
         startActivity(intent);
     }
+
     private void startToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
+
     // 그래프 그리기
-    private void updateChartActivity(int id){
-        chart = findViewById(id);
+    private void updateChartActivity() {
+        CombinedChart chart = findViewById(R.id.carboChart);
 
         chart.getDescription().setEnabled(false);
         chart.setBackgroundColor(Color.WHITE);
@@ -278,13 +246,42 @@ public class MainActivity extends AppCompatActivity {
         chart.invalidate();
     }
 
+    private void textSetUpProcess() {
+        if (!isRecommendLoaded || !isTotalLoaded) {
+            return;
+        }
+        if (recNutritionMap.get("calories") != null && recNutritionMap.get("carbohydrate") != null) {
+            int caloriePercent = totNutritionMap.get("calories") / recNutritionMap.get("calories");
+            int carboPercent = totNutritionMap.get("carbohydrate") / recNutritionMap.get("carbohydrate");
+            // TODO : 각종 수치들 변수로 바꾸기
+            // 칼로리 내역 표시
+            calorieTextView(caloriePercent);
+            // 탄수화물 섭취 내역
+            updateChartActivity();   // 탄수화물 섭취 현황 차트
+            TextView textCarbo = (TextView) findViewById(R.id.textCarbo);
+            textCarbo.setText("탄수화물\n오늘 권장탄수화물의 " + carboPercent
+                    + "%를\n섭취하셨습니다.\n권장섭취량 : " + recNutritionMap.get("carbohydrate") +
+                    "g\n실제섭취량 : " + totNutritionMap.get("carbohydrate") + "g\n");
+        } else {
+            TextView textCaloriePercent = (TextView) findViewById(R.id.textCaloriePercent);
+            textCaloriePercent.setText("오늘 권장칼로리의%를\n섭취하셨습니다.");
+        }
+    }
+    private void calorieTextView(int caloriePercent) {
+        TextView textCaloriePercent = (TextView) findViewById(R.id.textCaloriePercent);
+        TextView textRealCalorie = (TextView) findViewById(R.id.textRealCalorie);
+        TextView textRecommendedCalorie = (TextView) findViewById(R.id.textRecommendedCalorie);
+        textCaloriePercent.setText("오늘 권장칼로리의 " + caloriePercent + "%를\n섭취하셨습니다.");
+        textRealCalorie.setText("총 섭취 칼로리 : " + totNutritionMap.get("calories") + "kcal");
+        textRecommendedCalorie.setText("권장 섭취 칼로리 : " + recNutritionMap.get("calories") + "kcal");
+    }
     // BarData : 실제 섭취량
     private BarData generateBarData(float realIntake) {
 
         ArrayList<BarEntry> entries = new ArrayList<>();
 
-       // TODO : 실제 섭취량 받아와서 넣기
-        entries.add(new BarEntry(0f ,realIntake));
+        // TODO : 실제 섭취량 받아와서 넣기
+        entries.add(new BarEntry(0f, realIntake));
 
         BarDataSet set = new BarDataSet(entries, "실제 섭취량");
         set.setColor(getResources().getColor(R.color.colorPrimaryLight));
@@ -306,7 +303,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Entry> entries = new ArrayList<>();
 
         // TODO : 권장 섭취량 받아와서 넣기
-        entries.add(new Entry(0f,recommendedIntake));
+        entries.add(new Entry(0f, recommendedIntake));
 
 
         ScatterDataSet set = new ScatterDataSet(entries, "권장 섭취량");

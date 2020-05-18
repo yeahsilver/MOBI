@@ -21,6 +21,7 @@ public class TotalDailyIntake {
         this.totalSodium = totalSodium;
         this.totalDietaryFiber = totalDietaryFiber;
     }
+    public TotalDailyIntake(){}
 
     public int gettotalCalories() {
         return this.totalCalories;

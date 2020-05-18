@@ -155,7 +155,10 @@ public class NutritionInfoActivity extends AppCompatActivity {
                     else {
                         startToast("사용자정보를 입력하세요.");
                     }
-                    myStartActivity(MainActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class );
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    //로그인 한 상태에서 뒤로가기 눌렀을 때 메인액티비로 이동, 나머지 스택 없어짐.
+                    startActivity(intent);
             }
         }
     };

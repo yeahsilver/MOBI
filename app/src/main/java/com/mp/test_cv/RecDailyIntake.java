@@ -11,6 +11,7 @@ public class RecDailyIntake {
         this.recProtein = recProtein;
         this.recFat = recFat;
     }
+    public RecDailyIntake(){}
 
     public int getrecCalories() {
         return this.recCalories;
