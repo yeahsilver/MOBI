@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                             textSetUpProcess();
                         } else {
                             Log.d(TAG, "No such document");
-                            myStartActivity(MemberInitActivity.class);
+                            myStartActivity(NutritionInfoActivity.class);
                             startToast("총섭취량 데이터 zero 초기화.");
                         }
                     }
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                             textSetUpProcess();
                             Log.d(TAG, "DocumentSnapshot data: " + documentSnapshot.getData());
                         } else {
-                            myStartActivity(NutritionInfoActivity.class);
+                            myStartActivity(MemberInitActivity.class);
                             Log.d(TAG, "No such document");
                             startToast("섭취량을 기록해주세요. 아직 없다면 수정완료를 눌러주세요");
                         }
@@ -113,7 +113,9 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG, "DocumentSnapshot data: " + documentSnapshot.getData());
                     }
                     else{
-                        myStartActivity(SignUpActivity.class);
+                        if (!isRecommendLoaded) {
+                            myStartActivity(MemberInitActivity.class);
+                        }
                         Log.d(TAG, "No such document");
                         startToast("회원가입을 해주세요.");
                     }
