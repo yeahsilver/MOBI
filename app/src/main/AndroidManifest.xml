@@ -10,18 +10,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <action android:name="android.intent.action.DATE_CHANGED"></action>
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:scheme="http"
-                    android:host="google.com" />
-            </intent-filter>
-        </activity>
         <activity android:name=".SplashActivity"
             android:theme="@style/SplashTheme"
             android:screenOrientation="unspecified"> <!--가로모드 지원 안됨-->
@@ -29,6 +17,8 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity">
         </activity>
         <activity android:name=".SignUpActivity">
         </activity>

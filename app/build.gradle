@@ -58,4 +58,6 @@ dependencies {
     implementation "androidx.camera:camera-camera2:${cameraxVersion}"
     // MPAndroid Chart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    // RecyclerView
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
 }
