@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Button;
 
 import com.github.mikephil.charting.charts.ScatterChart;
 import com.github.mikephil.charting.components.Legend;
@@ -54,14 +55,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-<<<<<<< HEAD
         totNutritionMap = new HashMap<String, Integer>();
         recNutritionMap = new HashMap<String, Integer>();
-=======
 
         Button btnInfo = findViewById(R.id.NutritionInfoButton);
 
->>>>>>> 9cad23f4fac08245b3ecb4fdae5f38438f79aa9f
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         Date today = new Date();
         SimpleDateFormat timeFormat = new SimpleDateFormat("yyyyMMddhhmmss");
@@ -130,8 +128,7 @@ public class MainActivity extends AppCompatActivity {
             myStartActivity(SignUpActivity.class);
             startToast("로그인을 해주세요.");
         }
-<<<<<<< HEAD
-=======
+
         findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
 
         btnInfo.setOnClickListener(new Button.OnClickListener() {
@@ -141,7 +138,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
->>>>>>> 9cad23f4fac08245b3ecb4fdae5f38438f79aa9f
 
     }
 
