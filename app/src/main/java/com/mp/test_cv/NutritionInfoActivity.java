@@ -21,6 +21,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import org.opencv.android.CameraActivity;
+
 public class NutritionInfoActivity extends AppCompatActivity {
     final String TAG = getClass().getSimpleName();
     PersonalDailyIntake inputIntake;

@@ -1,6 +1,7 @@
 package com.mp.test_cv;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -28,8 +29,6 @@ import com.google.firebase.ml.vision.document.FirebaseVisionDocumentText;
 import com.google.firebase.ml.vision.document.FirebaseVisionDocumentTextRecognizer;
 
 import java.io.File;
-import java.io.IOError;
-import java.io.IOException;
 import java.util.List;
 
 public class PreviewActivity extends AppCompatActivity {
@@ -72,14 +71,12 @@ public class PreviewActivity extends AppCompatActivity {
                 .into(preview);
     }
 
-
         private void runCloudTextRecognition(){
             bitmap = GetBitmapFromInternal();
 
             FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(bitmap);
 
             FirebaseVisionDocumentTextRecognizer recognizer = FirebaseVision.getInstance().getCloudDocumentTextRecognizer();
-
 
             recognizer.processImage(image).addOnSuccessListener(new OnSuccessListener<FirebaseVisionDocumentText>() {
                 @Override
@@ -98,9 +95,7 @@ public class PreviewActivity extends AppCompatActivity {
 
         private void failRecognize(){
             Toast.makeText(this, "fail", Toast.LENGTH_SHORT).show();
-
         }
-
         private void processCloudTextRecognitionResult(FirebaseVisionDocumentText text) {
             List<FirebaseVisionDocumentText.Block> blockList = text.getBlocks();
             if (blockList.size() == 0) {
