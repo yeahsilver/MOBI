@@ -234,12 +234,16 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         if (recNutritionMap.get("calories") != null && recNutritionMap.get("carbohydrate") != null) {
-            int caloriePercent = totNutritionMap.get("calories") / recNutritionMap.get("calories");
-            int carbohydratePercent = totNutritionMap.get("carbohydrate") / recNutritionMap.get("carbohydrate");
+            int caloriePercent = (totNutritionMap.get("calories") * 100) / recNutritionMap.get("calories");
+            int carbohydratePercent = (totNutritionMap.get("carbohydrate") * 100) / recNutritionMap.get("carbohydrate");
             // 칼로리 내역 표시
+            Log.w(TAG, "totNutritionMap : " + totNutritionMap.get("calories"));
+            Log.w(TAG, "recNutritionMap : " + recNutritionMap.get("calories"));
+            Log.w(TAG, "caloriePercent : " + caloriePercent);
             calorieTextView(caloriePercent);
             // 탄수화물 섭취 내역
             updateChartActivity();   // 탄수화물 섭취 현황 차트
+            Log.w(TAG, "carbohydratePercent : " + carbohydratePercent);
             carbohydrateTextView(carbohydratePercent);
             BMIinfoSetting();
         } else {
@@ -250,6 +254,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     private void calorieTextView(int caloriePercent) {
+        Log.w(TAG, "caloriePercent : " + caloriePercent);
+
         TextView textCaloriePercent = (TextView) findViewById(R.id.textCaloriePercent);
         TextView textRealCalorie = (TextView) findViewById(R.id.textRealCalorie);
         TextView textRecommendedCalorie = (TextView) findViewById(R.id.textRecommendedCalorie);
@@ -258,6 +264,7 @@ public class MainActivity extends AppCompatActivity {
         textRecommendedCalorie.setText("권장 섭취 칼로리 : " + recNutritionMap.get("calories") + "kcal");
     }
     private void carbohydrateTextView(int carbohydratePercent) {
+        Log.w(TAG, "carbohydratePercent : " + carbohydratePercent);
         TextView textCarbo = (TextView) findViewById(R.id.textCarbo);
         textCarbo.setText("탄수화물\n오늘 권장탄수화물의 " + carbohydratePercent
                 + "%를\n섭취하셨습니다.\n권장섭취량 : " + recNutritionMap.get("carbohydrate") +
