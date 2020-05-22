@@ -129,7 +129,7 @@ public class MemberInitActivity extends AppCompatActivity {
         float height = Float.parseFloat(((EditText)findViewById(R.id.heightEditText)).getText().toString());
         float weight = Float.parseFloat(((EditText)findViewById(R.id.weightEditText)).getText().toString());
         int age = Integer.parseInt(((EditText)findViewById(R.id.ageEditText)).getText().toString());
-
+        double bmi = weight / (float)Math.pow(height / 100, 2);
         int tmpCalories = 0;
         int recCalories = 0;
 
@@ -154,7 +154,8 @@ public class MemberInitActivity extends AppCompatActivity {
         if (height > 0 && weight > 0 && age > 0 && gender >= 0 && activityMeasure > 0) {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            MemberInfo memberInfo = new MemberInfo(height, weight, age, activityMeasure, gender);
+
+            MemberInfo memberInfo = new MemberInfo(height, weight, age, activityMeasure, gender, bmi);
            if (user != null){
                // RecDailyIntake 생성
                RecDailyIntake recDailyIntake = new RecDailyIntake(recCalories, recCarbohydrate, recProtein, recFat, 1, 1, 1, 1);
