@@ -157,7 +157,7 @@ public class MemberInitActivity extends AppCompatActivity {
             MemberInfo memberInfo = new MemberInfo(height, weight, age, activityMeasure, gender);
            if (user != null){
                // RecDailyIntake 생성
-               RecDailyIntake recDailyIntake = new RecDailyIntake(recCalories, recCarbohydrate, recProtein, recFat);
+               RecDailyIntake recDailyIntake = new RecDailyIntake(recCalories, recCarbohydrate, recProtein, recFat, 1, 1, 1, 1);
 
                db.collection("User").document(user.getUid())
                        .set(memberInfo)
