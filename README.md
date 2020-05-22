@@ -1,4 +1,5 @@
 # 🏃 모두의 헬스 케어 비서 - MOBI 
+> Notion: https://www.notion.so/MOBI-041d60cbe6864780a47d9ba9e671b8f8
 
 ## ✍️ 주요 기능
 
@@ -95,16 +96,16 @@
 
 > DB Architecture
 
-![Database Shcema-3](https://user-images.githubusercontent.com/28800101/81262551-03f43500-9079-11ea-8a2e-93c2ad383b8f.png)
+![Database Shcema-4 (1)](https://user-images.githubusercontent.com/28800101/82138942-4ed33100-985f-11ea-837e-d806b386469d.png)
 
 * **User**
   * 사용자의 아이디와 비밀번호, 해당 사용자 데이터가 가지고 있는 하위 정보
 * **RecDailyIntake**
-  * 사용자가 섭취해야 하는 영양성분의 총량
+  * 사용자의 정보를 바탕으로 사용자가 섭취해야 하는 영양성분의 총량
 * **DailyIntake**
-  * 사용자가 실제 섭취한 영양 성분의 총량
-* **NutritionFacts**
   * 스캔한 영양 성분표에 기재된 정보, 섭취한 성분의 숫자 데이터 값
+* **TotalDailyIntake**
+  * 스캔한 영양 성분표를 기준으로 한 사용자가 실제 섭취한 영양 성분의 총량
 
 <br/>
 
@@ -129,6 +130,9 @@
     - [Tenserflow를 이용한 object recognition](https://cloud.google.com/solutions/creating-object-detection-application-tensorflow?hl=ko)
     - [Tesseract 개발환경 만들기](https://junyoung-jamong.github.io/computer/vision/2019/02/07/Android-Tesseract-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0.html)
     - [Camera X](https://developer.android.com/training/camerax)
+    
+  - **오픈소스**
+    - [Android Chart](https://github.com/PhilJay/MPAndroidChart)
 
 
 
@@ -141,3 +145,5 @@
 - [2020년 4월 6일 월요일 회의록](./meeting-record/20200408.md)
 - [2020년 4월 27일 월요일 회의록](./meeting-record/20200427.md)
 - [2020년 5월 4일 월요일 회의록](./meeting-record/20200504.md)
+- [2020년 5월 13일 월요일 회의록](./meeting-record/20200513.md)
+- [2020년 5월 18일 월요일 회의록](./meeting-record/20200518.md)
