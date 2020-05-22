@@ -54,8 +54,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+<<<<<<< HEAD
         totNutritionMap = new HashMap<String, Integer>();
         recNutritionMap = new HashMap<String, Integer>();
+=======
+
+        Button btnInfo = findViewById(R.id.NutritionInfoButton);
+
+>>>>>>> 9cad23f4fac08245b3ecb4fdae5f38438f79aa9f
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         Date today = new Date();
         SimpleDateFormat timeFormat = new SimpleDateFormat("yyyyMMddhhmmss");
@@ -124,6 +130,18 @@ public class MainActivity extends AppCompatActivity {
             myStartActivity(SignUpActivity.class);
             startToast("로그인을 해주세요.");
         }
+<<<<<<< HEAD
+=======
+        findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
+
+        btnInfo.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, NutritionInfoActivity.class);
+                startActivity(intent);
+            }
+        });
+>>>>>>> 9cad23f4fac08245b3ecb4fdae5f38438f79aa9f
 
     }
 

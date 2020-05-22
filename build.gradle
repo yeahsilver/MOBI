@@ -5,7 +5,12 @@ buildscript {
     repositories {
         google()
         jcenter()
+<<<<<<< HEAD
         maven { url "https://jitpack.io" }
+=======
+        mavenCentral()
+        
+>>>>>>> 9cad23f4fac08245b3ecb4fdae5f38438f79aa9f
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.6.1'
@@ -20,7 +25,11 @@ allprojects {
     repositories {
         google()
         jcenter()
+<<<<<<< HEAD
         maven { url "https://jitpack.io" } //MPAndroid Chart
+=======
+        mavenCentral()
+>>>>>>> 9cad23f4fac08245b3ecb4fdae5f38438f79aa9f
     }
 }
 
