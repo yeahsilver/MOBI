@@ -78,17 +78,15 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     TotalDailyIntake totalDailyIntake = documentSnapshot.toObject(TotalDailyIntake.class);
-                    if (documentSnapshot != null) {
-                        if (documentSnapshot.exists()) {
-                            Log.d(TAG, "DocumentSnapshot data: " + documentSnapshot.getData());
-                            totalDailyIntakeMapping(totalDailyIntake);
-                            calorieTextView();
-                            setRecyclerView();
-                        } else {
-                            Log.d(TAG, "No such document");
-                            myStartActivity(NutritionInfoActivity.class);
-                            startToast("총섭취량 데이터 zero 초기화.");
-                        }
+                    if (documentSnapshot.exists()) {
+                        Log.d(TAG, "DocumentSnapshot data: " + documentSnapshot.getData());
+                        totalDailyIntakeMapping(totalDailyIntake);
+                        calorieTextView();
+                        setRecyclerView();
+                    } else {
+                        Log.d(TAG, "No such document");
+                        myStartActivity(NutritionInfoActivity.class);
+                        startToast("총섭취량 데이터 zero 초기화.");
                     }
                 }
             });
@@ -96,17 +94,15 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     RecDailyIntake recDailyIntake = documentSnapshot.toObject(RecDailyIntake.class);
-                    if (documentSnapshot != null) {
-                        if (documentSnapshot.exists()) {
-                            recommendDailyIntakeMapping(recDailyIntake);
-                            calorieTextView();
-                            setRecyclerView();
-                            Log.d(TAG, "DocumentSnapshot data: " + documentSnapshot.getData());
-                        } else {
-                            myStartActivity(MemberInitActivity.class);
-                            Log.d(TAG, "No such document");
-                            startToast("섭취량을 기록해주세요. 아직 없다면 수정완료를 눌러주세요");
-                        }
+                    if (documentSnapshot.exists()) {
+                        recommendDailyIntakeMapping(recDailyIntake);
+                        calorieTextView();
+                        setRecyclerView();
+                        Log.d(TAG, "DocumentSnapshot data: " + documentSnapshot.getData());
+                    } else {
+                        myStartActivity(MemberInitActivity.class);
+                        Log.d(TAG, "No such document");
+                        startToast("섭취량을 기록해주세요. 아직 없다면 수정완료를 눌러주세요");
                     }
                 }
             });
