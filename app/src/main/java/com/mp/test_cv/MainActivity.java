@@ -66,7 +66,11 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
         findViewById(R.id.NutritionInfoButton).setOnClickListener(onClickListener);
-        if (user != null) {
+        if (user == null) {
+            myStartActivity(SignUpActivity.class);
+            startToast("로그인을 해주세요.");
+        }
+         else {
             // DailyIntake 생성
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             DocumentReference docRef = db.collection("User").document(user.getUid());
@@ -125,11 +129,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
             //totlDailyIntake data에서 totalCalories / recDatilyIntake에서 recCalorie
-        } else {
-            myStartActivity(SignUpActivity.class);
-            startToast("로그인을 해주세요.");
         }
-
     }
 
 
