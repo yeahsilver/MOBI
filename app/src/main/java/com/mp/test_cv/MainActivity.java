@@ -52,6 +52,13 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        setRecyclerView();
+        BMIinfoSetting();
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -85,8 +92,11 @@ public class MainActivity extends AppCompatActivity {
                         setRecyclerView();
                     } else {
                         Log.d(TAG, "No such document");
-                        myStartActivity(NutritionInfoActivity.class);
-                        startToast("총섭취량 데이터 zero 초기화.");
+                        if(!isTotalLoaded) {
+                           startToast("오늘의 섭취량을 기록해주세요.");
+                           myStartActivity(NutritionInfoActivity.class);
+                           isTotalLoaded = true; // NutritionActivity로 후에 보내서 값 바꾸기 처리
+                        }
                     }
                 }
             });
@@ -100,9 +110,12 @@ public class MainActivity extends AppCompatActivity {
                         setRecyclerView();
                         Log.d(TAG, "DocumentSnapshot data: " + documentSnapshot.getData());
                     } else {
-                        myStartActivity(MemberInitActivity.class);
+                        if (!isRecommendLoaded) {
+                            startToast("기본 정보를 기록해주세요.");
+                            //myStartActivity(MemberInitActivity.class);
+                        }
+                        startToast("잘못된 접근입니다..");
                         Log.d(TAG, "No such document");
-                        startToast("섭취량을 기록해주세요. 아직 없다면 수정완료를 눌러주세요");
                     }
                 }
             });
@@ -116,11 +129,9 @@ public class MainActivity extends AppCompatActivity {
                         Log.d(TAG, "DocumentSnapshot data: " + documentSnapshot.getData());
                     }
                     else{
-                        if (!isRecommendLoaded) {
-                            myStartActivity(MemberInitActivity.class);
-                        }
                         Log.d(TAG, "No such document");
-                        startToast("회원가입을 해주세요.");
+                       // startToast("회원가입을 해주세요.");
+                        //myStartActivity(SignUpActivity.class);
                     }
                 }
             });
@@ -213,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void userInfoSetUp(MemberInfo userInfo) {
         if (userInfo == null) {
-            myStartActivity(MemberInitActivity.class);
+            //myStartActivity(MemberInitActivity.class);
             return;
         }
         else {

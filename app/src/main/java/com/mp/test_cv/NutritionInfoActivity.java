@@ -51,7 +51,7 @@ public class NutritionInfoActivity extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.scan:
-                    myStartActivity(CameraView.class);
+                    myStartActivity(OCRScanActivity.class);
                     break;
                 case R.id.submit:
                     //calories = Integer.valueOf(((EditText)findViewById(R.id.editCal)).getText().toString());

@@ -31,6 +31,8 @@ public class MemberInitActivity extends AppCompatActivity {
     private Spinner gender_spinner;
     private double activityMeasure;
     private int gender; //0 = female, 1 = male.
+    private boolean getUser = false;
+    private boolean getRecommendIntake = false;
     private static final String TAG = "MemberInitActivity";
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -171,7 +173,7 @@ public class MemberInitActivity extends AppCompatActivity {
                        .addOnFailureListener(new OnFailureListener() {
                            @Override
                            public void onFailure(@NonNull Exception e) {
-                               startToast("정보 입력에 실패했습니다..");
+                               startToast("정보 입력에 실패했습니다.");
                                Log.w(TAG, "Error writing document", e);
                            }
                        });
@@ -188,16 +190,19 @@ public class MemberInitActivity extends AppCompatActivity {
                        .addOnFailureListener(new OnFailureListener() {
                            @Override
                            public void onFailure(@NonNull Exception e) {
-                               startToast("정보 입력에 실패했습니다..");
+                               startToast("정보 입력에 실패했습니다.");
                                Log.w(TAG, "Error writing document", e);
                            }
                        });
-
            }
         }
         else {
             startToast("사용자정보를 입력하세요.");
         }
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class );
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //로그인 한 상태에서 뒤로가기 눌렀을 때 메인액티비로 이동, 나머지 스택 없어짐.
+        startActivity(intent);
     }
     private void startToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();

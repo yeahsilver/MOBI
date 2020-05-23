@@ -34,6 +34,7 @@
         </activity>
         <activity android:name=".NutritionInfoActivity"/>
         <activity android:name=".CameraView"/>
+        <activity android:name=".OCRScanActivity"></activity>
 
     </application>
     <supports-screens
