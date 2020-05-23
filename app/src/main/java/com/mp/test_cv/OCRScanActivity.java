@@ -212,12 +212,97 @@ public class OCRScanActivity extends AppCompatActivity {
 
         protected void onPostExecute(String result) {
             Log.d(TAG, result);
+
+            String[] texts = result.split("\n");
+            String nutrition;
+            int calories = 0;
+            int fat= 0;
+            int transFat=0;
+            int carbohydrate=0;
+            int dietaryFiber=0;
+            int sugars=0;
+
+
+
+            for(int i=0;i<texts.length;i++) {
+                texts[i] = texts[i].trim();
+
+                if(texts[i].contains("Calories")) {
+                    calories = tokenizing(texts[i], "Calories");
+                }
+
+                else if(texts[i].contains("Total Fat")){
+                    fat = tokenizing(texts[i], "Total Fat");
+                }
+
+                else if(texts[i].contains("Trans Fat")){
+                    transFat = tokenizing(texts[i], "Trans Fat");
+                }
+
+                else if(texts[i].contains("Total Carbohydrate")){
+                    carbohydrate = tokenizing(texts[i], "Total Carbohydrate");
+                }
+
+                else if(texts[i].contains("Dietary Fiber")){
+                    dietaryFiber = tokenizing(texts[i], "Dietary Fiber");
+                }
+
+                else if(texts[i].contains("Total Sugars")){
+                    sugars = tokenizing(texts[i], "Total Sugars");
+                }
+
+            }
+
+            System.out.println("Calories : "+ calories);
+            System.out.println("Total Fat : "+ fat);
+            System.out.println("Trans Fat : "+ transFat);
+            System.out.println("Total Carbohydrate : "+ carbohydrate);
+            System.out.println("Dietary Fiber : "+ dietaryFiber);
+            System.out.println("Total Sugars : "+ sugars);
+
             OCRTextView.setText(result);
             Toast.makeText(OCRScanActivity.this, ""+result, Toast.LENGTH_LONG).show();
 
             button.setEnabled(true);
             button.setText("텍스트 인식");
         }
+
+        protected int tokenizing(String oneline, String nutrition) {
+            String[] tokens;
+            int intake = 0;
+
+            if(oneline.contains(nutrition)) {
+                System.out.println("**" + oneline);
+                tokens = oneline.split(nutrition);
+
+                for(int j=0;j<tokens.length;j++) {
+                    tokens[j] = tokens[j].trim();
+                    System.out.println("--"+tokens[j]);
+
+
+                    if(tokens[j].length() < 1) continue;
+                    if(tokens[j].charAt(0) >= '0' && tokens[j].charAt(0) <= '9') {
+                        tokens = tokens[j].split(" ");
+                        System.out.println("++"+tokens);
+
+                        if(tokens[0].endsWith("g")) {
+                            intake = Integer.parseInt(tokens[0].split("g")[0]);
+                        }
+                        else if(tokens[0].endsWith("9")){
+                            intake = Integer.parseInt(tokens[0].split("9")[0]);
+
+                        }
+                        else {
+                            intake = Integer.parseInt(tokens[0]);
+                        }
+
+                    }
+
+                }
+            }
+            return intake;
+        }
+
     }
     private void startLoginActivity() {
         Intent intent = new Intent(this, MainActivity.class);
