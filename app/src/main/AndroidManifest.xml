@@ -53,6 +53,9 @@
         <activity android:name=".PreviewActivity">
 
         </activity>
+        <activity android:name=".OCRScanActivity">
+
+        </activity>
 
     </application>
     <supports-screens

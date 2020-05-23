@@ -96,6 +96,7 @@ public class PreviewActivity extends AppCompatActivity {
         private void failRecognize(){
             Toast.makeText(this, "fail", Toast.LENGTH_SHORT).show();
         }
+
         private void processCloudTextRecognitionResult(FirebaseVisionDocumentText text) {
             List<FirebaseVisionDocumentText.Block> blockList = text.getBlocks();
             if (blockList.size() == 0) {

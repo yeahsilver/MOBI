@@ -49,7 +49,6 @@ public class CameraView extends AppCompatActivity {
         ORIENTATIONS.append(ExifInterface.ORIENTATION_ROTATE_270, 270);
     }
 
-    int REQUEST_IMAGE_CAPTURE = 1;
     int REQUESTCODE = 300;
 
     static final int PERMISSIONS_REQUEST_CODE = 101;

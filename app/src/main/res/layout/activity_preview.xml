@@ -8,9 +8,6 @@
     android:orientation="vertical"
     tools:context=".PreviewActivity">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,8 +23,8 @@
 
                 <ImageView
                     android:id="@+id/preview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="250dp"
+                    android:layout_height="250dp"
                     android:adjustViewBounds="true"
                     android:scaleType="fitStart"
                     app:srcCompat="@drawable/ic_launcher_foreground" />
@@ -51,13 +48,19 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/txt"
+                    <ScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="여기에 텍스트가 입력됩니다."
-                        android:textAlignment="center"
-                        android:textSize="30dp" />
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/txt"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="여기에 텍스트가 입력됩니다."
+                            android:textAlignment="center"
+                            android:textSize="15dp" />
+
+                    </ScrollView>
 
                 </LinearLayout>
 
@@ -65,6 +68,5 @@
 
         </LinearLayout>
 
-    </ScrollView>
 
 </LinearLayout>
