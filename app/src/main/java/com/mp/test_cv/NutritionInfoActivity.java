@@ -37,6 +37,8 @@ public class NutritionInfoActivity extends AppCompatActivity {
     FirebaseUser user;
     FirebaseFirestore db;
     String date;
+    boolean getUser = false;
+    boolean getDocument = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +56,7 @@ public class NutritionInfoActivity extends AppCompatActivity {
                     myStartActivity(OCRScanActivity.class);
                     break;
                 case R.id.submit:
-                    //calories = Integer.valueOf(((EditText)findViewById(R.id.editCal)).getText().toString());
+                    calories = Integer.valueOf(((EditText)findViewById(R.id.editCalorie)).getText().toString());
                     carbohydrate = Integer.valueOf(((EditText)findViewById(R.id.editCarbo)).getText().toString());
                     protein = Integer.valueOf(((EditText)findViewById(R.id.editProtein)).getText().toString());
                     fat = Integer.valueOf(((EditText)findViewById(R.id.editFat)).getText().toString());
@@ -87,6 +89,7 @@ public class NutritionInfoActivity extends AppCompatActivity {
                                    @Override
                                    public void onSuccess(Void aVoid) {
                                        startToast("정보 입력에 성공했습니다..");
+                                       getUser = true;
                                        finish();
                                    }
                                })
@@ -125,6 +128,7 @@ public class NutritionInfoActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
                                                     startToast("정보를 초기화했습니다.");
+                                                    getDocument = true;
                                                     finish();
                                                 }
                                             })
@@ -147,6 +151,7 @@ public class NutritionInfoActivity extends AppCompatActivity {
                                     tdb.update("totalSaturatedFat", FieldValue.increment(saturatedFat));
                                     tdb.update("totalSodium", FieldValue.increment(sugar));
                                     tdb.update("totalSugar", FieldValue.increment(sodium));
+                                    getDocument = true;
                                 }
                             }
                         });

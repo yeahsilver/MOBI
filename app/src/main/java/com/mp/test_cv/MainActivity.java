@@ -42,9 +42,10 @@ public class MainActivity extends AppCompatActivity {
     Map<String, Integer> recNutritionMap; //권장 영양소 섭취량
     MemberInfo userInfo;
     float userBMI;
-    boolean isTotalLoaded;
+    boolean isTotalLoaded = false;
     boolean isRecommendLoaded;
     boolean isUserLoaded;
+    FirebaseUser user;
 
     // RecyclerView
     private RecyclerView recyclerView;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        calorieTextView();
         setRecyclerView();
         BMIinfoSetting();
     }
@@ -64,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         totNutritionMap = new HashMap<String, Integer>();
         recNutritionMap = new HashMap<String, Integer>();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        user = FirebaseAuth.getInstance().getCurrentUser();
         Date today = new Date();
         SimpleDateFormat timeFormat = new SimpleDateFormat("yyyyMMddhhmmss");
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
@@ -92,11 +94,10 @@ public class MainActivity extends AppCompatActivity {
                         setRecyclerView();
                     } else {
                         Log.d(TAG, "No such document");
-                        if(!isTotalLoaded) {
-                           startToast("오늘의 섭취량을 기록해주세요.");
-                           myStartActivity(NutritionInfoActivity.class);
-                           isTotalLoaded = true; // NutritionActivity로 후에 보내서 값 바꾸기 처리
-                        }
+                        TotalDailyIntake initialTotalDailyIntake = new TotalDailyIntake(0,0,0,0,0,0,0,0);
+                        totalDailyIntakeMapping(initialTotalDailyIntake);
+                        calorieTextView();
+                        setRecyclerView();
                     }
                 }
             });
@@ -126,7 +127,29 @@ public class MainActivity extends AppCompatActivity {
                     if (documentSnapshot.exists()) {
                         userInfoSetUp(memberInfo);
                         BMIinfoSetting();
+                        calorieTextView();
+                        setRecyclerView();
                         Log.d(TAG, "DocumentSnapshot data: " + documentSnapshot.getData());
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        DocumentReference docRef = db.collection("User").document(user.getUid());
+                        docRef.collection("TotalDailyIntake").document(date).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                TotalDailyIntake totalDailyIntake = documentSnapshot.toObject(TotalDailyIntake.class);
+                                if (documentSnapshot.exists()) {
+                                    Log.d(TAG, "DocumentSnapshot data: " + documentSnapshot.getData());
+                                    totalDailyIntakeMapping(totalDailyIntake);
+                                    calorieTextView();
+                                    setRecyclerView();
+                                } else {
+                                    Log.d(TAG, "No such document");
+                                    TotalDailyIntake initialTotalDailyIntake = new TotalDailyIntake(0,0,0,0,0,0,0,0);
+                                    totalDailyIntakeMapping(initialTotalDailyIntake);
+                                    calorieTextView();
+                                    setRecyclerView();
+                                }
+                            }
+                        });
                     }
                     else{
                         Log.d(TAG, "No such document");
@@ -188,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void totalDailyIntakeMapping(TotalDailyIntake totalDailyIntake) {
-        totCalorie = totalDailyIntake.gettotalCarbohydrate();
+        totCalorie = totalDailyIntake.gettotalCalories();
         totNutritionMap.put("carbohydrate", totalDailyIntake.gettotalCarbohydrate());
         totNutritionMap.put("protein", totalDailyIntake.gettotalProtein());
         totNutritionMap.put("fat", totalDailyIntake.gettotalFat());

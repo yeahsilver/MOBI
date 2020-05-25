@@ -225,6 +225,7 @@ public class OCRScanActivity extends AppCompatActivity {
     }
 
 
+
     /* public void processImage(Bitmap bitmap) {
         Toast.makeText(getApplicationContext(), "이미지가 복잡할 경우 해석시 많은 시간이 소요될 수 있습니다.", Toast.LENGTH_LONG).show();
         String OCRresult = null;
