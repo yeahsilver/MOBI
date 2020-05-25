@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.document.FirebaseVisionDocumentText;
@@ -36,7 +37,7 @@ public class PreviewActivity extends AppCompatActivity {
     FrameLayout frameLayout;
     TextView txt;
     Bitmap bitmap;
-    Button button;
+    FloatingActionButton btnSave, btnRetry;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,13 +54,22 @@ public class PreviewActivity extends AppCompatActivity {
 
         preview = findViewById(R.id.preview);
 
-        button = findViewById(R.id.btnRecognized);
+        btnSave = findViewById(R.id.btnSave);
+        btnRetry = findViewById(R.id.btnRetry);
 
 
-        button.setOnClickListener(new Button.OnClickListener() {
+        btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 runCloudTextRecognition();
+            }
+        });
+
+        btnRetry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PreviewActivity.this, CameraView.class);
+                startActivity(intent);
             }
         });
 
