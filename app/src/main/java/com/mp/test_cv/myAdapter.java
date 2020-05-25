@@ -83,7 +83,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         if(recNutritionMap.get(nutrition) != null){
             recNutrition = recNutritionMap.get(nutrition);
-            ratioNutrition = totNutrition / recNutrition;
+            ratioNutrition = (totNutrition * 100) / recNutrition;
         }
         else{
             recNutrition = 0;
