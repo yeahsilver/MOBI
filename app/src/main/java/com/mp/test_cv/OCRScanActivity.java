@@ -133,7 +133,7 @@ public class OCRScanActivity extends AppCompatActivity {
         surfaceView.capture(new Camera.PictureCallback() {
             @Override
             public void onPictureTaken(byte[] bytes, Camera camera) {
-                /*BitmapFactory.Options options = new BitmapFactory.Options();
+                BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = 8;
 
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
@@ -143,13 +143,12 @@ public class OCRScanActivity extends AppCompatActivity {
                 button.setEnabled(false);
                 button.setText("텍스트 인식중...");
                 new AsyncTess().execute(bitmap);
-
                 camera.startPreview();
-                */
 
 
 
-                BitmapFactory.Options options = new BitmapFactory.Options();
+
+                /*BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = 8;
 
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
@@ -177,7 +176,7 @@ public class OCRScanActivity extends AppCompatActivity {
                 new OCRScanActivity.AsyncTess().execute(imgRoi);
 
                 camera.startPreview();
-
+*/
 
             }
         });
@@ -207,6 +206,7 @@ public class OCRScanActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(String result) {
+            Log.d(TAG, result);
             OCRTextView.setText(result);
             Toast.makeText(OCRScanActivity.this, ""+result, Toast.LENGTH_LONG).show();
 
@@ -218,6 +218,7 @@ public class OCRScanActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
+
 
 
     /* public void processImage(Bitmap bitmap) {
