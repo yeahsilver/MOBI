@@ -31,7 +31,7 @@ public class DrawGuideline extends View {
 
         paint.setColor(Color.WHITE);
         paint.setAlpha(128);
-        canvas.drawRect(300,150, 400+(w/2.0f) , 400+(h/1.5f),paint);
+        canvas.drawRect(200,150, 500+(w/2.0f) , 400+(h/1.5f),paint);
 
     }
 }

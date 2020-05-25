@@ -1,6 +1,7 @@
 package com.mp.test_cv;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -22,14 +23,13 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.ml.vision.FirebaseVision;
 import com.google.firebase.ml.vision.common.FirebaseVisionImage;
 import com.google.firebase.ml.vision.document.FirebaseVisionDocumentText;
 import com.google.firebase.ml.vision.document.FirebaseVisionDocumentTextRecognizer;
 
 import java.io.File;
-import java.io.IOError;
-import java.io.IOException;
 import java.util.List;
 
 public class PreviewActivity extends AppCompatActivity {
@@ -37,7 +37,7 @@ public class PreviewActivity extends AppCompatActivity {
     FrameLayout frameLayout;
     TextView txt;
     Bitmap bitmap;
-    Button button;
+    FloatingActionButton btnSave, btnRetry;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,13 +54,22 @@ public class PreviewActivity extends AppCompatActivity {
 
         preview = findViewById(R.id.preview);
 
-        button = findViewById(R.id.btnRecognized);
+        btnSave = findViewById(R.id.btnSave);
+        btnRetry = findViewById(R.id.btnRetry);
 
 
-        button.setOnClickListener(new Button.OnClickListener() {
+        btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 runCloudTextRecognition();
+            }
+        });
+
+        btnRetry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PreviewActivity.this, CameraView.class);
+                startActivity(intent);
             }
         });
 
@@ -72,14 +81,12 @@ public class PreviewActivity extends AppCompatActivity {
                 .into(preview);
     }
 
-
         private void runCloudTextRecognition(){
             bitmap = GetBitmapFromInternal();
 
             FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(bitmap);
 
             FirebaseVisionDocumentTextRecognizer recognizer = FirebaseVision.getInstance().getCloudDocumentTextRecognizer();
-
 
             recognizer.processImage(image).addOnSuccessListener(new OnSuccessListener<FirebaseVisionDocumentText>() {
                 @Override
@@ -98,7 +105,6 @@ public class PreviewActivity extends AppCompatActivity {
 
         private void failRecognize(){
             Toast.makeText(this, "fail", Toast.LENGTH_SHORT).show();
-
         }
 
         private void processCloudTextRecognitionResult(FirebaseVisionDocumentText text) {
