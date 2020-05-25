@@ -28,6 +28,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.FieldValue;
 
+import org.opencv.android.CameraActivity;
+
 public class NutritionInfoActivity extends AppCompatActivity {
     final String TAG = getClass().getSimpleName();
     PersonalDailyIntake inputIntake;

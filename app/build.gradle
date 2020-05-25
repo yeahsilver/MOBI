@@ -61,8 +61,9 @@ dependencies {
     // MPAndroid Chart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
 
+    //firebase
     implementation 'com.google.firebase:firebase-ml-vision:24.0.0'
-    implementation 'com.google.firebase:firebase-ml-vision:24.0.0'
+    implementation 'com.google.firebase:firebase-auth:17.0.0'
     //noinspection GradleCompatible
     implementation 'com.android.support:design:28.0.0'
     //glide
