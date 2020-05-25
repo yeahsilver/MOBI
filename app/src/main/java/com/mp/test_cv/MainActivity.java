@@ -15,7 +15,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Button;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -67,14 +66,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         totNutritionMap = new HashMap<String, Integer>();
         recNutritionMap = new HashMap<String, Integer>();
-<<<<<<< HEAD
-
-        Button btnInfo = findViewById(R.id.NutritionInfoButton);
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-=======
         user = FirebaseAuth.getInstance().getCurrentUser();
->>>>>>> 8ac61ed743d31698652db7e5625b1b0d19a9e52c
         Date today = new Date();
         SimpleDateFormat timeFormat = new SimpleDateFormat("yyyyMMddhhmmss");
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
@@ -121,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         if (!isRecommendLoaded) {
                             startToast("기본 정보를 기록해주세요.");
-                            //myStartActivity(MemberInitActivity.class);
+                            myStartActivity(MemberInitActivity.class);
                         }
                         startToast("잘못된 접근입니다..");
                         Log.d(TAG, "No such document");
@@ -168,20 +160,6 @@ public class MainActivity extends AppCompatActivity {
             });
             //totlDailyIntake data에서 totalCalories / recDatilyIntake에서 recCalorie
         }
-<<<<<<< HEAD
-
-        findViewById(R.id.logoutButton).setOnClickListener(onClickListener);
-
-        btnInfo.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, NutritionInfoActivity.class);
-                startActivity(intent);
-            }
-        });
-
-=======
->>>>>>> 8ac61ed743d31698652db7e5625b1b0d19a9e52c
     }
 
 
@@ -214,75 +192,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-<<<<<<< HEAD
-        // 그래프 그리기
-        int realIntake = totNutritionMap.get("carbohydrate");
-        int recommendedIntake = recNutritionMap.get("carbohydrate");
-        CombinedData data = new CombinedData();
-        data.setData(generateBarData(realIntake));
-        data.setData(generateScatterData(recommendedIntake));
-
-        chart.setData(data);
-        chart.invalidate();
-    }
-
-    private void textSetUpProcess() {
-        if (!isRecommendLoaded || !isTotalLoaded) {
-            return;
-        }
-        if (recNutritionMap.get("calories") != null && recNutritionMap.get("carbohydrate") != null) {
-            int caloriePercent = (totNutritionMap.get("calories") * 100) / recNutritionMap.get("calories");
-            int carbohydratePercent = (totNutritionMap.get("carbohydrate") * 100) / recNutritionMap.get("carbohydrate");
-            // 칼로리 내역 표시
-            Log.w(TAG, "totNutritionMap : " + totNutritionMap.get("calories"));
-            Log.w(TAG, "recNutritionMap : " + recNutritionMap.get("calories"));
-            Log.w(TAG, "caloriePercent : " + caloriePercent);
-            calorieTextView(caloriePercent);
-            // 탄수화물 섭취 내역
-            updateChartActivity();   // 탄수화물 섭취 현황 차트
-            Log.w(TAG, "carbohydratePercent : " + carbohydratePercent);
-            carbohydrateTextView(carbohydratePercent);
-            BMIinfoSetting();
-        } else {
-            calorieTextView(0);
-            carbohydrateTextView(0);
-            startToast("사용자 정보가 없습니다.");
-            myStartActivity(MemberInitActivity.class);
-        }
-    }
-    private void calorieTextView(int caloriePercent) {
-        Log.w(TAG, "caloriePercent : " + caloriePercent);
-
-=======
     private void calorieTextView() {
         int caloriePercent;
->>>>>>> 8ac61ed743d31698652db7e5625b1b0d19a9e52c
         TextView textCaloriePercent = (TextView) findViewById(R.id.textCaloriePercent);
         TextView textRealCalorie = (TextView) findViewById(R.id.textRealCalorie);
         TextView textRecommendedCalorie = (TextView) findViewById(R.id.textRecommendedCalorie);
 
         if(recCalorie != 0){
-            caloriePercent = totCalorie/recCalorie;
+            caloriePercent = (totCalorie * 100) / recCalorie;
         } else {
             caloriePercent = 0;
         }
 
         textCaloriePercent.setText("오늘 권장칼로리의 " + caloriePercent + "%를\n섭취하셨습니다.");
-<<<<<<< HEAD
-        textRealCalorie.setText("총 섭취 칼로리 : " + totNutritionMap.get("calories") + "kcal");
-        textRecommendedCalorie.setText("권장 섭취 칼로리 : " + recNutritionMap.get("calories") + "kcal");
-    }
-    private void carbohydrateTextView(int carbohydratePercent) {
-        Log.w(TAG, "carbohydratePercent : " + carbohydratePercent);
-        TextView textCarbo = (TextView) findViewById(R.id.textCarbo);
-        textCarbo.setText("탄수화물\n오늘 권장탄수화물의 " + carbohydratePercent
-                + "%를\n섭취하셨습니다.\n권장섭취량 : " + recNutritionMap.get("carbohydrate") +
-                "g\n실제섭취량 : " + totNutritionMap.get("carbohydrate") + "g\n");
-=======
         textCaloriePercent.setTextColor(Color.parseColor("#673AB7"));
         textRealCalorie.setText("총 섭취 칼로리 : " + totCalorie+ "kcal");
         textRecommendedCalorie.setText("권장 섭취 칼로리 : " + recCalorie + "kcal");
->>>>>>> 8ac61ed743d31698652db7e5625b1b0d19a9e52c
     }
 
     private void totalDailyIntakeMapping(TotalDailyIntake totalDailyIntake) {

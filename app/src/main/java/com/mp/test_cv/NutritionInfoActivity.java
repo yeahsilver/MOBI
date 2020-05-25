@@ -56,11 +56,7 @@ public class NutritionInfoActivity extends AppCompatActivity {
                     myStartActivity(CameraView.class);
                     break;
                 case R.id.submit:
-<<<<<<< HEAD
-                    calories = Integer.valueOf(((EditText)findViewById(R.id.calorie)).getText().toString());
-=======
                     calories = Integer.valueOf(((EditText)findViewById(R.id.editCalorie)).getText().toString());
->>>>>>> 8ac61ed743d31698652db7e5625b1b0d19a9e52c
                     carbohydrate = Integer.valueOf(((EditText)findViewById(R.id.editCarbo)).getText().toString());
                     protein = Integer.valueOf(((EditText)findViewById(R.id.editProtein)).getText().toString());
                     fat = Integer.valueOf(((EditText)findViewById(R.id.editFat)).getText().toString());

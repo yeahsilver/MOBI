@@ -60,10 +60,7 @@ dependencies {
 
     // MPAndroid Chart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
-<<<<<<< HEAD
 
-=======
->>>>>>> 8ac61ed743d31698652db7e5625b1b0d19a9e52c
     implementation 'com.google.firebase:firebase-ml-vision:24.0.0'
     implementation 'com.google.firebase:firebase-ml-vision:24.0.0'
     //noinspection GradleCompatible
@@ -71,11 +68,8 @@ dependencies {
     //glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
-<<<<<<< HEAD
 
-}
-=======
     // RecyclerView
     implementation "androidx.recyclerview:recyclerview:1.1.0"
 }
->>>>>>> 8ac61ed743d31698652db7e5625b1b0d19a9e52c
+
