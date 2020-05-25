@@ -6,12 +6,14 @@ public class MemberInfo {
     private int age;
     private double activityMeasure;
     private int gender; // 0 female 1 male
-    public MemberInfo(float height, float weight, int age, double activityMeasure, int gender) {
+    private double bmi;
+    public MemberInfo(float height, float weight, int age, double activityMeasure, int gender, double bmi) {
         this.height = height;
         this.weight = weight;
         this.age = age;
         this.activityMeasure = activityMeasure;
         this.gender = gender;
+        this.bmi = bmi;
     }
     public MemberInfo() {}
 
@@ -45,4 +47,8 @@ public class MemberInfo {
     public void setGender(int gender) {
         this.gender = gender;
     }
+    public double getBmi() {
+        return this.bmi;
+    }
+    public void setBmi(double bmi) { this.bmi = bmi; }
 }

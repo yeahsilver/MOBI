@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             myStartActivity(SignUpActivity.class);
             startToast("로그인을 해주세요.");
         }
-         else {
+        else {
             // DailyIntake 생성
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             DocumentReference docRef = db.collection("User").document(user.getUid());
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     else{
                         Log.d(TAG, "No such document");
-                       // startToast("회원가입을 해주세요.");
+                        // startToast("회원가입을 해주세요.");
                         //myStartActivity(SignUpActivity.class);
                     }
                 }

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mp.test_cv">
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -9,6 +11,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:hardwareAccelerated="true"
         android:theme="@style/AppTheme">
         <activity android:name=".SplashActivity"
             android:theme="@style/SplashTheme"
@@ -32,9 +35,15 @@
         <activity android:name=".MemberInitActivity">
 
         </activity>
-        <activity android:name=".NutritionInfoActivity"/>
-        <activity android:name=".CameraView"/>
-        <activity android:name=".OCRScanActivity"></activity>
+        <activity android:name=".NutritionInfoActivity">
+
+        </activity>
+        <activity android:name=".CameraView">
+        </activity>
+
+        <activity android:name=".PreviewActivity">
+
+        </activity>
 
     </application>
     <supports-screens
@@ -43,7 +52,6 @@
         android:normalScreens="true"
         android:resizeable="true"
         android:smallScreens="true" />
-
     <uses-feature
         android:name="android.hardware.camera.front"
         android:required="false" />
@@ -56,9 +64,4 @@
     <uses-feature
         android:name="android.hardware.camera.autofocus"
         android:required="false" />
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-    <uses-permission android:name="android.permission.CAMERA" />
-
 </manifest>

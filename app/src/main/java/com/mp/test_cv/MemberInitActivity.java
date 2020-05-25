@@ -131,7 +131,7 @@ public class MemberInitActivity extends AppCompatActivity {
         float height = Float.parseFloat(((EditText)findViewById(R.id.heightEditText)).getText().toString());
         float weight = Float.parseFloat(((EditText)findViewById(R.id.weightEditText)).getText().toString());
         int age = Integer.parseInt(((EditText)findViewById(R.id.ageEditText)).getText().toString());
-
+        double bmi = weight / (float)Math.pow(height / 100, 2);
         int tmpCalories = 0;
         int recCalories = 0;
 
@@ -152,14 +152,59 @@ public class MemberInitActivity extends AppCompatActivity {
         int recCarbohydrate = (int)(recCalories * 0.65); // 55 ~ 70 %
         int recProtein = (int)(recCalories * 0.15); // 7 ~ 20 %
         int recFat = (int)(recCalories * 0.2); // 15 ~ 25 %
+        int recSugar = (int)(recCalories * 0.15); // 10 ~ 20 %
+
+        int recDietaryFiber = 0;
+        int recSodium = 0;
+        int recSaturatedFat = 0;
+
+        if(gender == 0 && age >= 6){
+            recDietaryFiber = 20;
+        }else{
+            if(age >= 6 && age <= 11){
+                recDietaryFiber = 20;
+            }else{
+                recDietaryFiber = 25;
+            }
+        }
+
+        if (age <= 2){
+            recDietaryFiber = 10;
+            recSodium = 900;
+            recSaturatedFat = 0;
+        }else if (age <= 5){
+            recDietaryFiber = 15;
+            recSodium = 1000;
+            recSaturatedFat = (int)(recCalories * 0.08); // ~ 8%
+        }else if (age <= 8){
+            recSodium = 1200;
+            recSaturatedFat = (int)(recCalories * 0.08); // ~ 8%
+        }else if (age <= 11){
+            recSodium = 1400;
+            recSaturatedFat = (int)(recCalories * 0.08); // ~ 8%
+        }else if(age <= 18){
+            recSodium = 1500;
+            recSaturatedFat = (int)(recCalories * 0.08); // ~ 8%
+        }else if(age >= 19 && age <= 64){
+            recSodium = 1500;
+            recSaturatedFat = (int)(recCalories * 0.07); // ~ 7%
+        }else if(age >= 64 && age <= 74){
+            recSodium = 1300;
+            recSaturatedFat = (int)(recCalories * 0.07); // ~ 7%
+        }else if(age >= 75){
+            recSodium = 1100;
+            recSaturatedFat = (int)(recCalories * 0.07); // ~ 7%
+        }
 
         if (height > 0 && weight > 0 && age > 0 && gender >= 0 && activityMeasure > 0) {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            MemberInfo memberInfo = new MemberInfo(height, weight, age, activityMeasure, gender);
+
+            MemberInfo memberInfo = new MemberInfo(height, weight, age, activityMeasure, gender, bmi);
            if (user != null){
                // RecDailyIntake 생성
-               RecDailyIntake recDailyIntake = new RecDailyIntake(recCalories, recCarbohydrate, recProtein, recFat);
+               RecDailyIntake recDailyIntake = new RecDailyIntake(recCalories, recCarbohydrate, recProtein,
+                       recFat, recSaturatedFat, recSugar, recSodium, recDietaryFiber);
 
                db.collection("User").document(user.getUid())
                        .set(memberInfo)

@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.mp.test_cv"
-        minSdkVersion 21
+        minSdkVersion 26
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -53,11 +53,21 @@ dependencies {
     implementation 'com.rmtheis:tess-two:9.0.0'
     implementation project(path: ':opencv')
     implementation 'com.google.firebase:firebase-firestore:21.2.1'
+    //camera X
     def cameraxVersion = "1.0.0-alpha02"
     implementation "androidx.camera:camera-core:${cameraxVersion}"
     implementation "androidx.camera:camera-camera2:${cameraxVersion}"
+
     // MPAndroid Chart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     // RecyclerView
     implementation "androidx.recyclerview:recyclerview:1.1.0"
+
+    implementation 'com.google.firebase:firebase-ml-vision:24.0.0'
+    implementation 'com.google.firebase:firebase-ml-vision:24.0.0'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:design:28.0.0'
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 }
