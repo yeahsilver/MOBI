@@ -29,6 +29,8 @@
         <activity android:name=".PasswordResetActivity">
 
         </activity>
+        <activity android:name=".PreviewActivity">
+        </activity>
         <activity android:name=".MemberInitActivity">
 
         </activity>
