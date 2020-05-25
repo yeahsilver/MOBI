@@ -227,10 +227,10 @@ public class MainActivity extends AppCompatActivity {
         recNutritionMap.put("carbohydrate", recDailyIntake.getrecCarbohydrate());
         recNutritionMap.put("protein", recDailyIntake.getrecProtein());
         recNutritionMap.put("fat", recDailyIntake.getrecFat());
-        //recNutritionMap.put("saturatedFat", recDailyIntake.getrecSaturatedFat());
-        //recNutritionMap.put("sugar", recDailyIntake.getrecSugar());
-        //recNutritionMap.put("sodium", recDailyIntake.getrecSodium());
-        //recNutritionMap.put("dietaryfiber", recDailyIntake.getrecDietaryFiber());
+        recNutritionMap.put("saturatedFat", recDailyIntake.getrecSaturatedFat());
+        recNutritionMap.put("sugar", recDailyIntake.getrecSugar());
+        recNutritionMap.put("sodium", recDailyIntake.getrecSodium());
+        recNutritionMap.put("dietaryfiber", recDailyIntake.getrecDietaryFiber());
         //후에 get으로 성분별 데이터 가져올 수 있음.
         isRecommendLoaded = true;
     }
