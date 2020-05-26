@@ -149,10 +149,10 @@ public class MemberInitActivity extends AppCompatActivity {
                 recCalories = (tmpCalories / 100) * 100;
                 break;
         }
-        int recCarbohydrate = (int)(recCalories * 0.65); // 55 ~ 70 %
-        int recProtein = (int)(recCalories * 0.15); // 7 ~ 20 %
-        int recFat = (int)(recCalories * 0.2); // 15 ~ 25 %
-        int recSugar = (int)(recCalories * 0.15); // 10 ~ 20 %
+        int recCarbohydrate = (int)(recCalories * 0.65 / 4); // 55 ~ 70 %, g당 4칼로리
+        int recProtein = (int)(recCalories * 0.15 / 4); // 7 ~ 20 %, g당 4칼로리
+        int recFat = (int)(recCalories * 0.2 / 9); // 15 ~ 25 %, g당 9칼로리
+        int recSugar = (int)(recCalories * 0.15 / 4); // 10 ~ 20 %, g당 4칼로리
 
         int recDietaryFiber = 0;
         int recSodium = 0;
@@ -175,25 +175,25 @@ public class MemberInitActivity extends AppCompatActivity {
         }else if (age <= 5){
             recDietaryFiber = 15;
             recSodium = 1000;
-            recSaturatedFat = (int)(recCalories * 0.08); // ~ 8%
+            recSaturatedFat = (int)(recCalories * 0.08 / 9); // ~ 8%
         }else if (age <= 8){
             recSodium = 1200;
-            recSaturatedFat = (int)(recCalories * 0.08); // ~ 8%
+            recSaturatedFat = (int)(recCalories * 0.08 / 9); // ~ 8%
         }else if (age <= 11){
             recSodium = 1400;
-            recSaturatedFat = (int)(recCalories * 0.08); // ~ 8%
+            recSaturatedFat = (int)(recCalories * 0.08 / 9); // ~ 8%
         }else if(age <= 18){
             recSodium = 1500;
-            recSaturatedFat = (int)(recCalories * 0.08); // ~ 8%
+            recSaturatedFat = (int)(recCalories * 0.08 / 9); // ~ 8%
         }else if(age >= 19 && age <= 64){
             recSodium = 1500;
-            recSaturatedFat = (int)(recCalories * 0.07); // ~ 7%
+            recSaturatedFat = (int)(recCalories * 0.07 / 9); // ~ 7%
         }else if(age >= 64 && age <= 74){
             recSodium = 1300;
-            recSaturatedFat = (int)(recCalories * 0.07); // ~ 7%
+            recSaturatedFat = (int)(recCalories * 0.07 / 9); // ~ 7%
         }else if(age >= 75){
             recSodium = 1100;
-            recSaturatedFat = (int)(recCalories * 0.07); // ~ 7%
+            recSaturatedFat = (int)(recCalories * 0.07 / 9); // ~ 7%
         }
 
         if (height > 0 && weight > 0 && age > 0 && gender >= 0 && activityMeasure > 0) {
