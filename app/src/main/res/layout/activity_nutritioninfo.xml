@@ -111,13 +111,13 @@
                     <EditText
                         android:id="@+id/editCarbo"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:ems="3"
-                        android:inputType="number"
-                        android:layout_marginLeft="10dp"
+                        android:layout_height="61dp"
                         android:layout_gravity="center"
-                        android:gravity="center"
+                        android:layout_marginLeft="10dp"
                         android:layout_weight="6"
+                        android:ems="3"
+                        android:gravity="center"
+                        android:inputType="number"
                         android:text="00" />
 
                 </LinearLayout>
@@ -204,11 +204,11 @@
                         android:id="@+id/editSaturFat"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:ems="3"
-                        android:inputType="number"
                         android:layout_marginLeft="10dp"
-                        android:gravity="center"
                         android:layout_weight="6"
+                        android:ems="3"
+                        android:gravity="center"
+                        android:inputType="number"
                         android:text="00" />
 
                 </LinearLayout>

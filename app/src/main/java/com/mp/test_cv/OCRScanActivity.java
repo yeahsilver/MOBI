@@ -19,14 +19,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.googlecode.tesseract.android.TessBaseAPI;
-
-import org.opencv.android.OpenCVLoader;
-import org.opencv.android.Utils;
-import org.opencv.core.Mat;
-import org.opencv.core.Rect;
-import org.opencv.imgproc.Imgproc;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -59,14 +52,14 @@ public class OCRScanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ocrscan);
 
-       // if(FirebaseAuth.getInstance().getCurrentUser() == null) {
+        // if(FirebaseAuth.getInstance().getCurrentUser() == null) {
 
 
         //뷰 선언
         imageView = findViewById(R.id.imageView);
         surfaceView = findViewById(R.id.surfaceView);
         OCRTextView = findViewById(R.id.textView);
-        button = findViewById(R.id.button);
+        button = findViewById(R.id.btnHome);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,12 +69,17 @@ public class OCRScanActivity extends AppCompatActivity {
         //캡처하면 이미지 처리를 capture()함수로 한다.
 
         tessBaseAPI = new TessBaseAPI();
-        String dir = getFilesDir()+"/tesseract";
-        if(checkLanguageFile(dir+"/tessdata")){
-            tessBaseAPI.init("/tessdata","eng");
-        } else {
-            Toast.makeText(this, dir + " isn't found", Toast.LENGTH_SHORT).show();
-        }
+        //tesseract 인식 언어를 설정 및 초기화
+        dataPath = getFilesDir() + "/tesseract";
+        lang = "kor+eng";
+
+        // checkFile(new File(dataPath + "/tessdata"), "kor");
+        //checkFile(new File(dataPath + "/tessdata"), "eng");
+
+        //tessBaseAPI.init(dataPath, lang);
+        String dir = getFilesDir() + "/tesseract";
+        if(checkLanguageFile(dir+"/tessdata"))
+            tessBaseAPI.init(dir, "eng");
 
         // Example of a call to a native method
         //processImage(BitmapFactory.decodeResource(getResources(), R.drawable.nutrition_facts));
@@ -150,31 +148,24 @@ public class OCRScanActivity extends AppCompatActivity {
 
                 /*BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = 8;
-
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
                 bitmap = GetRotatedBitmap(bitmap, 90);
                 //bitmap은 원본
-
                 OpenCVLoader.initDebug(); // 초기화
-
                 Mat uncropped = new Mat();
                 Utils.bitmapToMat(bitmap, uncropped);
                 Rect roi = new Rect(0, 0, 200, 200);
                 Mat matGray = new Mat();
                 Imgproc.cvtColor(uncropped, matGray, Imgproc.COLOR_BGR2GRAY); // GrayScale
-
                 Mat cropped = new Mat(uncropped, roi);
                 // cropped한 이미지 Mat객체로 가짐
                 Bitmap imgRoi = Bitmap.createBitmap(cropped.cols(), cropped.rows(), Bitmap.Config.ARGB_8888);
                 imgRoi = GetRotatedBitmap(imgRoi, 90);
-
                 Utils.matToBitmap(cropped, imgRoi);
                 //  imageView.setImageBitmap(imgRoi);
-
                 button.setEnabled(false);
                 button.setText("텍스트 인식중...");
                 new OCRScanActivity.AsyncTess().execute(imgRoi);
-
                 camera.startPreview();
 */
 
@@ -207,18 +198,103 @@ public class OCRScanActivity extends AppCompatActivity {
 
         protected void onPostExecute(String result) {
             Log.d(TAG, result);
+
+            // tockenizing start
+            String[] texts = result.split("\n");
+            String nutrition;
+            int calories = 0;
+            int fat= 0;
+            int transFat=0;
+            int carbohydrate=0;
+            int dietaryFiber=0;
+            int sugars=0;
+
+
+
+            for(int i=0;i<texts.length;i++) {
+                texts[i] = texts[i].trim();
+
+                if(texts[i].contains("Calories")) {
+                    calories = tokenizing(texts[i], "Calories");
+                }
+
+                else if(texts[i].contains("Total Fat")){
+                    fat = tokenizing(texts[i], "Total Fat");
+                }
+
+                else if(texts[i].contains("Trans Fat")){
+                    transFat = tokenizing(texts[i], "Trans Fat");
+                }
+
+                else if(texts[i].contains("Total Carbohydrate")){
+                    carbohydrate = tokenizing(texts[i], "Total Carbohydrate");
+                }
+
+                else if(texts[i].contains("Dietary Fiber")){
+                    dietaryFiber = tokenizing(texts[i], "Dietary Fiber");
+                }
+
+                else if(texts[i].contains("Total Sugars")){
+                    sugars = tokenizing(texts[i], "Total Sugars");
+                }
+
+            }
+
+            System.out.println("Calories : "+ calories);
+            System.out.println("Total Fat : "+ fat);
+            System.out.println("Trans Fat : "+ transFat);
+            System.out.println("Total Carbohydrate : "+ carbohydrate);
+            System.out.println("Dietary Fiber : "+ dietaryFiber);
+            System.out.println("Total Sugars : "+ sugars);
+            // tockenizing --
             OCRTextView.setText(result);
             Toast.makeText(OCRScanActivity.this, ""+result, Toast.LENGTH_LONG).show();
 
             button.setEnabled(true);
             button.setText("텍스트 인식");
         }
+        // tockenizing --
+        protected int tokenizing(String oneline, String nutrition) {
+            String[] tokens;
+            int intake = 0;
+
+            if(oneline.contains(nutrition)) {
+                System.out.println("**" + oneline);
+                tokens = oneline.split(nutrition);
+
+                for(int j=0;j<tokens.length;j++) {
+                    tokens[j] = tokens[j].trim();
+                    System.out.println("--"+tokens[j]);
+
+
+                    if(tokens[j].length() < 1) continue;
+                    if(tokens[j].charAt(0) >= '0' && tokens[j].charAt(0) <= '9') {
+                        tokens = tokens[j].split(" ");
+                        System.out.println("++"+tokens);
+
+                        if(tokens[0].endsWith("g")) {
+                            intake = Integer.parseInt(tokens[0].split("g")[0]);
+                        }
+                        else if(tokens[0].endsWith("9")){
+                            intake = Integer.parseInt(tokens[0].split("9")[0]);
+
+                        }
+                        else {
+                            intake = Integer.parseInt(tokens[0]);
+                        }
+
+                    }
+
+                }
+            }
+            return intake;
+        }
+        // tockenizing end
     }
     private void startLoginActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
-
 
 
     /* public void processImage(Bitmap bitmap) {
@@ -236,4 +312,3 @@ public class OCRScanActivity extends AppCompatActivity {
 
     public native String stringFromJNI();
 }
-

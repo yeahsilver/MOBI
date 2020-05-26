@@ -63,15 +63,17 @@
                     app:srcCompat="@drawable/ic_refresh_24px" />
 
             </LinearLayout>
-
+        </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
                     <ScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="match_parent"
+                        android:fillViewport="true"
+                        android:layout_weight="1">
 
                         <TextView
                             android:id="@+id/txt"
@@ -81,13 +83,22 @@
                             android:textAlignment="center"
                             android:textSize="15dp" />
 
+
                     </ScrollView>
+                    <Button
+                        android:id="@+id/btnHome"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/btn_purple"
+                        android:textColor="@android:color/white"
+                        android:text="인식 완료"/>
+
+
+
 
                 </LinearLayout>
-
-
-
-        </LinearLayout>
 
 
 </LinearLayout>
