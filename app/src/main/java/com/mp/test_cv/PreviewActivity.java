@@ -42,11 +42,13 @@ public class PreviewActivity extends AppCompatActivity {
     private Button btnHome;
 
     int calories = 0;
-    int fat = 0;
-    int transFat = 0;
     int carbohydrate = 0;
-    int dietaryFiber = 0;
+    int protein = 0;
+    int fat = 0;
+    int saturFat = 0;
     int sugars = 0;
+    int sodium = 0;
+    int dietaryFiber = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,16 +71,19 @@ public class PreviewActivity extends AppCompatActivity {
         btnHome.setEnabled(false);
         btnHome.setText("텍스트 인식중...");
 
+        // 인식 완료를 누르면 NutritionInfoActivity로 값을 전달
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PreviewActivity.this, NutritionInfoActivity.class);
                 intent.putExtra("calories", calories);
-                intent.putExtra("fat", fat);
-                intent.putExtra("transFat", transFat);
                 intent.putExtra("carbohydrate", carbohydrate);
-                intent.putExtra("dietaryFiber", dietaryFiber);
+                intent.putExtra("protein", protein);
+                intent.putExtra("fat", fat);
+                intent.putExtra("saturFat", saturFat);
                 intent.putExtra("sugars", sugars);
+                intent.putExtra("sodium", sodium);
+                intent.putExtra("dietaryFiber", dietaryFiber);
                 startActivity(intent);
             }
         });
@@ -173,31 +178,43 @@ public class PreviewActivity extends AppCompatActivity {
 
                 if (texts[i].contains("Calories")) {
                     calories = tokenizing(texts[i], "Calories");
-                } else if (texts[i].contains("Total Fat")) {
-                    fat = tokenizing(texts[i], "Total Fat");
-                } else if (texts[i].contains("Trans Fat")) {
-                    transFat = tokenizing(texts[i], "Trans Fat");
                 } else if (texts[i].contains("Total Carbohydrate")) {
                     carbohydrate = tokenizing(texts[i], "Total Carbohydrate");
-                } else if (texts[i].contains("Dietary Fiber")) {
-                    dietaryFiber = tokenizing(texts[i], "Dietary Fiber");
+                } else if (texts[i].contains("Protein")) {
+                    protein = tokenizing(texts[i], "Protein");
+                } else if (texts[i].contains("Total Fat")) {
+                    fat = tokenizing(texts[i], "Total Fat");
+                } else if (texts[i].contains("Saturated Fat")) {
+                    saturFat = tokenizing(texts[i], "Saturated Fat");
                 } else if (texts[i].contains("Total Sugars")) {
                     sugars = tokenizing(texts[i], "Total Sugars");
+                } else if (texts[i].contains("Sodium")) {
+                    sodium = tokenizing(texts[i], "Sodium");
+                } else if (texts[i].contains("Dietary Fiber")) {
+                    dietaryFiber = tokenizing(texts[i], "Dietary Fiber");
                 }
 
             }
 
             // 결과를 화면에 띄어줌
-            txt.setText("Calories : " + calories + "\nTotal Fat : " + fat + "\nTrans Fat : " + transFat
-                    + "\nTotal Carbohydrate : " + carbohydrate + "\nDietary Fiber : " + dietaryFiber
-                    + "\nTotal Sugars : " + sugars);
+            txt.setText("칼로리(Calories) : " + calories +
+                    "\n탄수화물(Total Carbohydrate) : " + carbohydrate +
+                    "\n단백질(Protein) : " + protein +
+                    "\n지방(Total Fat) : " + fat +
+                    "\n포화지방(Saturated Fat) : " + saturFat +
+                    "\n당류(Total Sugars) : " + sugars +
+                    "\n나트륨(Sodium) : " + sodium +
+                    "\n식이섬유(Dietary Fiber) : " + dietaryFiber);
 
+
+            /*
             System.out.println("Calories : " + calories);
             System.out.println("Total Fat : " + fat);
             System.out.println("Trans Fat : " + transFat);
             System.out.println("Total Carbohydrate : " + carbohydrate);
             System.out.println("Dietary Fiber : " + dietaryFiber);
             System.out.println("Total Sugars : " + sugars);
+            */
 
             // tockenizing --
             //txt.setText(result);
@@ -211,6 +228,7 @@ public class PreviewActivity extends AppCompatActivity {
 
         // tockenizing --
         protected int tokenizing(String oneline, String nutrition) {
+            System.out.println("tokenizing : " + oneline);
             String[] tokens;
             int intake = 0;
 
@@ -228,7 +246,9 @@ public class PreviewActivity extends AppCompatActivity {
                         tokens = tokens[j].split(" ");
                         System.out.println("++" + tokens);
 
-                        if (tokens[0].endsWith("g")) {
+                        if (tokens[0].endsWith("mg")) {
+                            intake = Integer.parseInt(tokens[0].split("mg")[0]);
+                        } else if (tokens[0].endsWith("g")) {
                             intake = Integer.parseInt(tokens[0].split("g")[0]);
                         } else if (tokens[0].endsWith("9")) {
                             intake = Integer.parseInt(tokens[0].split("9")[0]);

@@ -54,25 +54,31 @@ public class NutritionInfoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         EditText editCalorie = (EditText) findViewById(R.id.editCalorie);
         EditText editCarbo = (EditText) findViewById(R.id.editCarbo);
+        EditText editProtein = (EditText) findViewById(R.id.editProtein);
         EditText editFat = (EditText) findViewById(R.id.editFat);
         EditText editSaturFat = (EditText) findViewById(R.id.editSaturFat);
         EditText editSugar = (EditText) findViewById(R.id.editSugar);
         EditText editSodium = (EditText) findViewById(R.id.editSodium);
         EditText editFiber = (EditText) findViewById(R.id.editFiber);
+
+        // Intent의 값이 없으면 0으로 설정
         int calories = intent.getIntExtra("calories",0);
-        int fat = intent.getIntExtra("fat",0);
-        //int transFat = intent.getIntExtra("transFat",0);
         int carbohydrate = intent.getIntExtra("carbohydrate",0);
-        int dietaryFiber = intent.getIntExtra("dietaryFiber",0);
+        int protein = intent.getIntExtra("protein",0);
+        int fat = intent.getIntExtra("fat",0);
+        int saturFat = intent.getIntExtra("saturFat",0);
         int sugars = intent.getIntExtra("sugars",0);
+        int sodium = intent.getIntExtra("sodium",0);
+        int fiber = intent.getIntExtra("dietaryFiber",0);
+
         editCalorie.setText(Integer.toString(calories));
-        editFat.setText(Integer.toString(fat));
         editCarbo.setText(Integer.toString(carbohydrate));
-        editFiber.setText(Integer.toString(dietaryFiber));
+        editProtein.setText(Integer.toString(protein));
+        editFat.setText(Integer.toString(fat));
+        editSaturFat.setText(Integer.toString(saturFat));
         editSugar.setText(Integer.toString(sugars));
-        //editCalorie.setText(Integer.toString(calories));
-        //editCalorie.setText(Integer.toString(calories));
-        //editCalorie.setText(Integer.toString(calories));
+        editSodium.setText(Integer.toString(sodium));
+        editFiber.setText(Integer.toString(fiber));
     }
    View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
