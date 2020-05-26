@@ -59,7 +59,7 @@ public class OCRScanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ocrscan);
 
-       // if(FirebaseAuth.getInstance().getCurrentUser() == null) {
+        // if(FirebaseAuth.getInstance().getCurrentUser() == null) {
 
 
         //뷰 선언
@@ -76,12 +76,17 @@ public class OCRScanActivity extends AppCompatActivity {
         //캡처하면 이미지 처리를 capture()함수로 한다.
 
         tessBaseAPI = new TessBaseAPI();
-        String dir = getFilesDir()+"/tesseract";
-        if(checkLanguageFile(dir+"/tessdata")){
-            tessBaseAPI.init("/tessdata","eng");
-        } else {
-            Toast.makeText(this, dir + " isn't found", Toast.LENGTH_SHORT).show();
-        }
+        //tesseract 인식 언어를 설정 및 초기화
+        dataPath = getFilesDir() + "/tesseract";
+        lang = "kor+eng";
+
+        // checkFile(new File(dataPath + "/tessdata"), "kor");
+        //checkFile(new File(dataPath + "/tessdata"), "eng");
+
+        //tessBaseAPI.init(dataPath, lang);
+        String dir = getFilesDir() + "/tesseract";
+        if(checkLanguageFile(dir+"/tessdata"))
+            tessBaseAPI.init(dir, "eng");
 
         // Example of a call to a native method
         //processImage(BitmapFactory.decodeResource(getResources(), R.drawable.nutrition_facts));
@@ -150,31 +155,24 @@ public class OCRScanActivity extends AppCompatActivity {
 
                 /*BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inSampleSize = 8;
-
                 Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
                 bitmap = GetRotatedBitmap(bitmap, 90);
                 //bitmap은 원본
-
                 OpenCVLoader.initDebug(); // 초기화
-
                 Mat uncropped = new Mat();
                 Utils.bitmapToMat(bitmap, uncropped);
                 Rect roi = new Rect(0, 0, 200, 200);
                 Mat matGray = new Mat();
                 Imgproc.cvtColor(uncropped, matGray, Imgproc.COLOR_BGR2GRAY); // GrayScale
-
                 Mat cropped = new Mat(uncropped, roi);
                 // cropped한 이미지 Mat객체로 가짐
                 Bitmap imgRoi = Bitmap.createBitmap(cropped.cols(), cropped.rows(), Bitmap.Config.ARGB_8888);
                 imgRoi = GetRotatedBitmap(imgRoi, 90);
-
                 Utils.matToBitmap(cropped, imgRoi);
                 //  imageView.setImageBitmap(imgRoi);
-
                 button.setEnabled(false);
                 button.setText("텍스트 인식중...");
                 new OCRScanActivity.AsyncTess().execute(imgRoi);
-
                 camera.startPreview();
 */
 
@@ -305,7 +303,6 @@ public class OCRScanActivity extends AppCompatActivity {
     }
 
 
-
     /* public void processImage(Bitmap bitmap) {
         Toast.makeText(getApplicationContext(), "이미지가 복잡할 경우 해석시 많은 시간이 소요될 수 있습니다.", Toast.LENGTH_LONG).show();
         String OCRresult = null;
@@ -321,4 +318,3 @@ public class OCRScanActivity extends AppCompatActivity {
 
     public native String stringFromJNI();
 }
-

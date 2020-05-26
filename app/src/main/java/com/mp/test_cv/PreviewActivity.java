@@ -116,6 +116,7 @@ public class PreviewActivity extends AppCompatActivity {
                 for (FirebaseVisionDocumentText.Block block : text.getBlocks()) {
                     String texts = block.getText();
                     txt.setText(texts);
+                    Log.d("texts : ", texts);
                 }
             }
         }
