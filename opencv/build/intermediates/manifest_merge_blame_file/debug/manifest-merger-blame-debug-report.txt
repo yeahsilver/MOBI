@@ -6,8 +6,8 @@
 6
 7    <uses-sdk
 8        android:minSdkVersion="21"
-8-->C:\Users\co3oi\Google Drive\Soongsil\20-1\Software project\MOBI\opencv\java\AndroidManifest.xml
+8-->C:\Users\Seungji Kim\Desktop\test\test_cv\opencv\java\AndroidManifest.xml
 9        android:targetSdkVersion="26" />
-9-->C:\Users\co3oi\Google Drive\Soongsil\20-1\Software project\MOBI\opencv\java\AndroidManifest.xml
+9-->C:\Users\Seungji Kim\Desktop\test\test_cv\opencv\java\AndroidManifest.xml
 10
 11</manifest>
