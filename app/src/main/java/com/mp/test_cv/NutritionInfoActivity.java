@@ -49,8 +49,32 @@ public class NutritionInfoActivity extends AppCompatActivity {
         //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         findViewById(R.id.scan).setOnClickListener(onClickListener);
         findViewById(R.id.submit).setOnClickListener(onClickListener);
+
+        //Intent 가져오기
+        Intent intent = getIntent();
+        EditText editCalorie = (EditText) findViewById(R.id.editCalorie);
+        EditText editCarbo = (EditText) findViewById(R.id.editCarbo);
+        EditText editFat = (EditText) findViewById(R.id.editFat);
+        EditText editSaturFat = (EditText) findViewById(R.id.editSaturFat);
+        EditText editSugar = (EditText) findViewById(R.id.editSugar);
+        EditText editSodium = (EditText) findViewById(R.id.editSodium);
+        EditText editFiber = (EditText) findViewById(R.id.editFiber);
+        int calories = intent.getIntExtra("calories",0);
+        int fat = intent.getIntExtra("fat",0);
+        //int transFat = intent.getIntExtra("transFat",0);
+        int carbohydrate = intent.getIntExtra("carbohydrate",0);
+        int dietaryFiber = intent.getIntExtra("dietaryFiber",0);
+        int sugars = intent.getIntExtra("sugars",0);
+        editCalorie.setText(Integer.toString(calories));
+        editFat.setText(Integer.toString(fat));
+        editCarbo.setText(Integer.toString(carbohydrate));
+        editFiber.setText(Integer.toString(dietaryFiber));
+        editSugar.setText(Integer.toString(sugars));
+        //editCalorie.setText(Integer.toString(calories));
+        //editCalorie.setText(Integer.toString(calories));
+        //editCalorie.setText(Integer.toString(calories));
     }
-    View.OnClickListener onClickListener = new View.OnClickListener() {
+   View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {

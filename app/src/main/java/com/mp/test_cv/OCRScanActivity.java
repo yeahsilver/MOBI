@@ -19,14 +19,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.googlecode.tesseract.android.TessBaseAPI;
-
-import org.opencv.android.OpenCVLoader;
-import org.opencv.android.Utils;
-import org.opencv.core.Mat;
-import org.opencv.core.Rect;
-import org.opencv.imgproc.Imgproc;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -66,7 +59,7 @@ public class OCRScanActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imageView);
         surfaceView = findViewById(R.id.surfaceView);
         OCRTextView = findViewById(R.id.textView);
-        button = findViewById(R.id.button);
+        button = findViewById(R.id.btnHome);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -206,6 +199,7 @@ public class OCRScanActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             Log.d(TAG, result);
 
+            // tockenizing start
             String[] texts = result.split("\n");
             String nutrition;
             int calories = 0;
@@ -252,14 +246,14 @@ public class OCRScanActivity extends AppCompatActivity {
             System.out.println("Total Carbohydrate : "+ carbohydrate);
             System.out.println("Dietary Fiber : "+ dietaryFiber);
             System.out.println("Total Sugars : "+ sugars);
-
+            // tockenizing --
             OCRTextView.setText(result);
             Toast.makeText(OCRScanActivity.this, ""+result, Toast.LENGTH_LONG).show();
 
             button.setEnabled(true);
             button.setText("텍스트 인식");
         }
-
+        // tockenizing --
         protected int tokenizing(String oneline, String nutrition) {
             String[] tokens;
             int intake = 0;
@@ -295,7 +289,7 @@ public class OCRScanActivity extends AppCompatActivity {
             }
             return intake;
         }
-
+        // tockenizing end
     }
     private void startLoginActivity() {
         Intent intent = new Intent(this, MainActivity.class);

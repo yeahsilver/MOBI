@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,6 +39,14 @@ public class PreviewActivity extends AppCompatActivity {
     TextView txt;
     Bitmap bitmap;
     FloatingActionButton btnSave, btnRetry;
+    private Button btnHome;
+
+    int calories = 0;
+    int fat = 0;
+    int transFat = 0;
+    int carbohydrate = 0;
+    int dietaryFiber = 0;
+    int sugars = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,7 +65,23 @@ public class PreviewActivity extends AppCompatActivity {
 
         btnSave = findViewById(R.id.btnSave);
         btnRetry = findViewById(R.id.btnRetry);
+        btnHome = findViewById(R.id.btnHome);
+        btnHome.setEnabled(false);
+        btnHome.setText("텍스트 인식중...");
 
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PreviewActivity.this, NutritionInfoActivity.class);
+                intent.putExtra("calories", calories);
+                intent.putExtra("fat", fat);
+                intent.putExtra("transFat", transFat);
+                intent.putExtra("carbohydrate", carbohydrate);
+                intent.putExtra("dietaryFiber", dietaryFiber);
+                intent.putExtra("sugars", sugars);
+                startActivity(intent);
+            }
+        });
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +97,6 @@ public class PreviewActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
 
         Glide.with(this).asBitmap()
                 .skipMemoryCache(true)
@@ -113,11 +137,16 @@ public class PreviewActivity extends AppCompatActivity {
                 Toast.makeText(this, "No Text Found in Image", Toast.LENGTH_SHORT).show();
                 return;
             } else {
+                String fullTexts = "";
+                fullTexts = text.getText();
+                //txt.setText(fullTexts);
+                onPostExecute(fullTexts);
+                /*
                 for (FirebaseVisionDocumentText.Block block : text.getBlocks()) {
                     String texts = block.getText();
-                    txt.setText(texts);
-                    Log.d("texts : ", texts);
+                    //txt.setText(texts);
                 }
+                 */
             }
         }
 
@@ -131,5 +160,88 @@ public class PreviewActivity extends AppCompatActivity {
             return new File(getFilesDir(),"temp.png");
         }
 
+        protected void onPostExecute(String result) {
+            Log.d("onPostExecute", result);
 
+            // tockenizing start
+            String[] texts = result.split("\n");
+            String nutrition;
+
+
+            for (int i = 0; i < texts.length; i++) {
+                texts[i] = texts[i].trim();
+
+                if (texts[i].contains("Calories")) {
+                    calories = tokenizing(texts[i], "Calories");
+                } else if (texts[i].contains("Total Fat")) {
+                    fat = tokenizing(texts[i], "Total Fat");
+                } else if (texts[i].contains("Trans Fat")) {
+                    transFat = tokenizing(texts[i], "Trans Fat");
+                } else if (texts[i].contains("Total Carbohydrate")) {
+                    carbohydrate = tokenizing(texts[i], "Total Carbohydrate");
+                } else if (texts[i].contains("Dietary Fiber")) {
+                    dietaryFiber = tokenizing(texts[i], "Dietary Fiber");
+                } else if (texts[i].contains("Total Sugars")) {
+                    sugars = tokenizing(texts[i], "Total Sugars");
+                }
+
+            }
+
+            // 결과를 화면에 띄어줌
+            txt.setText("Calories : " + calories + "\nTotal Fat : " + fat + "\nTrans Fat : " + transFat
+                    + "\nTotal Carbohydrate : " + carbohydrate + "\nDietary Fiber : " + dietaryFiber
+                    + "\nTotal Sugars : " + sugars);
+
+            System.out.println("Calories : " + calories);
+            System.out.println("Total Fat : " + fat);
+            System.out.println("Trans Fat : " + transFat);
+            System.out.println("Total Carbohydrate : " + carbohydrate);
+            System.out.println("Dietary Fiber : " + dietaryFiber);
+            System.out.println("Total Sugars : " + sugars);
+
+            // tockenizing --
+            //txt.setText(result);
+            //Toast.makeText(PreviewActivity.this, "" + result, Toast.LENGTH_LONG).show();
+
+            btnHome.setEnabled(true);
+            btnHome.setText("인식 완료");
+            //button.setEnabled(true);
+            //button.setText("텍스트 인식");
+        }
+
+        // tockenizing --
+        protected int tokenizing(String oneline, String nutrition) {
+            String[] tokens;
+            int intake = 0;
+
+            if (oneline.contains(nutrition)) {
+                System.out.println("**" + oneline);
+                tokens = oneline.split(nutrition);
+
+                for (int j = 0; j < tokens.length; j++) {
+                    tokens[j] = tokens[j].trim();
+                    System.out.println("--" + tokens[j]);
+
+
+                    if (tokens[j].length() < 1) continue;
+                    if (tokens[j].charAt(0) >= '0' && tokens[j].charAt(0) <= '9') {
+                        tokens = tokens[j].split(" ");
+                        System.out.println("++" + tokens);
+
+                        if (tokens[0].endsWith("g")) {
+                            intake = Integer.parseInt(tokens[0].split("g")[0]);
+                        } else if (tokens[0].endsWith("9")) {
+                            intake = Integer.parseInt(tokens[0].split("9")[0]);
+
+                        } else {
+                            intake = Integer.parseInt(tokens[0]);
+                        }
+
+                    }
+
+                }
+            }
+            return intake;
+        }
+        // tockenizing end
 }
