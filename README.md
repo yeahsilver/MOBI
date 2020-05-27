@@ -35,15 +35,15 @@
 
   * **박재희: Design Administrator**
 
-    * ` UI `, ` Firebase ML KIT Manager `
+    * ` UI `, ` Firebase Database Manager `
 
-  * **허예은: Server Manager & Database Administrator**
+  * **허예은: firebase Connect Manager**
 
-    * ` Firebase Authentification `, ` OpenCV ` , ` Meeting Recorder `
+    * ` Firebase ML KIT Connect Manager `, ` OpenCV ` , `Schedule Manager`
 
   * **박정아: Server Manager & Database Administrator**
 
-    * ` Firebase Database Connector `, ` Schedule Manager `
+    * ` Firebase Database Manager `, ` Schedule Manager `
 
 <br/>
 
