@@ -60,7 +60,7 @@
 
 * Firebase Authentication (oauth)
 
-* tesseract - Text Recognition
+* Firebase ML KIT - Text Recognition
 
 
 <br/>
