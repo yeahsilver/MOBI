@@ -54,12 +54,9 @@
         <activity android:name=".PreviewActivity">
 
         </activity>
-<<<<<<< HEAD
-=======
         <activity android:name=".OCRScanActivity">
 
         </activity>
->>>>>>> fb48513a2a31cb7f285635a94c630724f2c7947f
 
     </application>
     <supports-screens
