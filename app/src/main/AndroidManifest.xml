@@ -3,7 +3,7 @@
     package="com.mp.test_cv">
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:allowBackup="true"
@@ -13,6 +13,18 @@
         android:supportsRtl="true"
         android:hardwareAccelerated="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.DATE_CHANGED"></action>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:scheme="http"
+                    android:host="google.com" />
+            </intent-filter>
+        </activity>
         <activity android:name=".SplashActivity"
             android:theme="@style/SplashTheme"
             android:screenOrientation="unspecified"> <!--가로모드 지원 안됨-->
@@ -20,8 +32,6 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".MainActivity">
         </activity>
         <activity android:name=".SignUpActivity">
         </activity>
@@ -44,6 +54,12 @@
         <activity android:name=".PreviewActivity">
 
         </activity>
+<<<<<<< HEAD
+=======
+        <activity android:name=".OCRScanActivity">
+
+        </activity>
+>>>>>>> fb48513a2a31cb7f285635a94c630724f2c7947f
 
     </application>
     <supports-screens

@@ -83,7 +83,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         if(recNutritionMap.get(nutrition) != null){
             recNutrition = recNutritionMap.get(nutrition);
-            ratioNutrition = totNutrition / recNutrition;
+            ratioNutrition = (totNutrition * 100) / recNutrition;
         }
         else{
             recNutrition = 0;
@@ -91,6 +91,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         }
 
         // 텍스트
+        char mg = '\0';
 
         switch(nutritions[i]){
             case "carbohydrate" :
@@ -115,6 +116,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
             case "sodium" :
                 nutrition = "나트륨";
+                mg = 'm';
                 break;
 
             case "dietaryfiber" :
@@ -123,10 +125,11 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         }
 
         holder.textViewTitle.setText(nutrition);
+
         holder.textView.setText("오늘 권장섭취량의 "
                 + ratioNutrition
-                + "%를\n섭취하셨습니다.\n권장섭취량 : " + recNutrition +
-                "g\n실제섭취량 : " + totNutrition + "g\n");
+                + "%를\n섭취하셨습니다.\n권장섭취량 : " + recNutrition + mg +
+                "g\n실제섭취량 : " + totNutrition + mg + "g\n");
 
         // 차트
         holder.chart.getDescription().setEnabled(false);
@@ -165,9 +168,9 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         leftAxis.setDrawGridLines(true);
         leftAxis.setDrawAxisLine(true);
 
-        // TODO : min, max 세팅 영양소별로 다르게 해줘야함
+
         leftAxis.setAxisMinimum(0f);
-        leftAxis.setAxisMaximum(1000f);
+        leftAxis.setAxisMaximum((float) (recNutrition*1.5));
 
         YAxis rightAxis = holder.chart.getAxisRight();
         rightAxis.setEnabled(false);
@@ -194,7 +197,6 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         ArrayList<BarEntry> entries = new ArrayList<>();
 
-        // TODO : 실제 섭취량 받아와서 넣기
         entries.add(new BarEntry(0f, totNutrition));
 
         BarDataSet set = new BarDataSet(entries, "실제 섭취량");
@@ -215,7 +217,6 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         ArrayList<Entry> entries = new ArrayList<>();
 
-        // TODO : 권장 섭취량 받아와서 넣기
         entries.add(new Entry(0f, recNutrition));
 
 

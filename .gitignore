@@ -11,6 +11,11 @@
 
 # OpenCV / Compiled Dynamic libraries
 *.so
+*/CMakeFiles
+*/CMakeCache.txt
+*/Makefile
+*/cmake_install.cmake
+.DS_Store
 
 # Android Studio
 # Built application files

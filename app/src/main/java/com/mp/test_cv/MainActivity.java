@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         if (!isRecommendLoaded) {
                             startToast("기본 정보를 기록해주세요.");
-                            //myStartActivity(MemberInitActivity.class);
+                            myStartActivity(MemberInitActivity.class);
                         }
                         startToast("잘못된 접근입니다..");
                         Log.d(TAG, "No such document");
@@ -199,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
         TextView textRecommendedCalorie = (TextView) findViewById(R.id.textRecommendedCalorie);
 
         if(recCalorie != 0){
-            caloriePercent = totCalorie/recCalorie;
+            caloriePercent = (totCalorie * 100) / recCalorie;
         } else {
             caloriePercent = 0;
         }
@@ -227,10 +227,10 @@ public class MainActivity extends AppCompatActivity {
         recNutritionMap.put("carbohydrate", recDailyIntake.getrecCarbohydrate());
         recNutritionMap.put("protein", recDailyIntake.getrecProtein());
         recNutritionMap.put("fat", recDailyIntake.getrecFat());
-        //recNutritionMap.put("saturatedFat", recDailyIntake.getrecSaturatedFat());
-        //recNutritionMap.put("sugar", recDailyIntake.getrecSugar());
-        //recNutritionMap.put("sodium", recDailyIntake.getrecSodium());
-        //recNutritionMap.put("dietaryfiber", recDailyIntake.getrecDietaryFiber());
+        recNutritionMap.put("saturatedFat", recDailyIntake.getrecSaturatedFat());
+        recNutritionMap.put("sugar", recDailyIntake.getrecSugar());
+        recNutritionMap.put("sodium", recDailyIntake.getrecSodium());
+        recNutritionMap.put("dietaryfiber", recDailyIntake.getrecDietaryFiber());
         //후에 get으로 성분별 데이터 가져올 수 있음.
         isRecommendLoaded = true;
     }
