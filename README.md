@@ -35,15 +35,15 @@
 
   * **박재희: Design Administrator**
 
-    * ` UI `, ` Firebase ML KIT Manager `
+    * ` UI `, ` Firebase Database Manager `
 
-  * **허예은: Server Manager & Database Administrator**
+  * **허예은: firebase Connect Manager**
 
-    * ` Firebase Authentification `, ` OpenCV ` , ` Meeting Recorder `
+    * ` Firebase ML KIT Connect Manager `, ` OpenCV ` , `Schedule Manager`
 
   * **박정아: Server Manager & Database Administrator**
 
-    * ` Firebase Database Connector `, ` Schedule Manager `
+    * ` Firebase Database Manager `, ` Schedule Manager `
 
 <br/>
 
@@ -60,7 +60,7 @@
 
 * Firebase Authentication (oauth)
 
-* tesseract - Text Recognition
+* Firebase ML KIT - Text Recognition
 
 
 <br/>
@@ -147,3 +147,4 @@
 - [2020년 5월 4일 월요일 회의록](./meeting-record/20200504.md)
 - [2020년 5월 13일 월요일 회의록](./meeting-record/20200513.md)
 - [2020년 5월 18일 월요일 회의록](./meeting-record/20200518.md)
+- [2020년 5월 25일 월요일 회의록](./meeting-record/20200525.md)
