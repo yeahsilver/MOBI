@@ -1,5 +1,7 @@
 # 🏃 모두의 헬스 케어 비서 - MOBI 
 > Notion: https://www.notion.so/MOBI-041d60cbe6864780a47d9ba9e671b8f8
+<img width="1788" alt="스크린샷 2020-06-14 오후 10 44 42" src="https://user-images.githubusercontent.com/39258902/84595021-aa113700-ae90-11ea-99c7-9ecea9910285.png">
+
 
 ## ✍️ 주요 기능
 
@@ -91,8 +93,8 @@
 ## ⚒   Project Architecture
 
 > Service Architecture
+<img width="1335" alt="스크린샷 2020-06-14 오후 10 49 21" src="https://user-images.githubusercontent.com/39258902/84595126-505d3c80-ae91-11ea-968e-e9fa0ca5748f.png">
 
-![image](https://user-images.githubusercontent.com/43927910/77143955-0221e280-6ac8-11ea-8338-da5ff079bb4c.png)
 
 > DB Architecture
 
@@ -150,3 +152,37 @@
 - [2020년 5월 25일 월요일 회의록](./meeting-record/20200525.md)
 - [2020년 6월 1일 월요일 회의록](./meeting-record/20200601.md)
 - [2020년 6월 8일 월요일 회의록](./meeting-record/20200608.md)
+
+## 💻 프로젝트 요약
+<img width="1790" alt="스크린샷 2020-06-14 오후 10 46 12" src="https://user-images.githubusercontent.com/39258902/84595053-dfb62000-ae90-11ea-87d8-5a27adc8239f.png">
+
+
+<img width="1788" alt="스크린샷 2020-06-14 오후 10 48 37" src="https://user-images.githubusercontent.com/39258902/84595107-34599b00-ae91-11ea-84a4-04c0fb288068.png">
+
+
+<img width="1792" alt="스크린샷 2020-06-14 오후 10 52 21" src="https://user-images.githubusercontent.com/39258902/84595249-b77af100-ae91-11ea-99cc-0184fb1c8657.png">
+
+
+<img width="1792" alt="스크린샷 2020-06-14 오후 10 53 50" src="https://user-images.githubusercontent.com/39258902/84595274-eb561680-ae91-11ea-8e14-541dad6d9bae.png">
+
+
+<img width="1791" alt="스크린샷 2020-06-14 오후 10 54 04" src="https://user-images.githubusercontent.com/39258902/84595279-f3ae5180-ae91-11ea-85a9-0f681421991d.png">
+
+
+<img width="1789" alt="스크린샷 2020-06-14 오후 10 54 19" src="https://user-images.githubusercontent.com/39258902/84595284-fc9f2300-ae91-11ea-8957-e144a49636dd.png">
+
+
+<img width="1790" alt="스크린샷 2020-06-14 오후 10 55 53" src="https://user-images.githubusercontent.com/39258902/84595317-34a66600-ae92-11ea-916e-a6b6c4049bbb.png">
+
+
+<img width="1792" alt="스크린샷 2020-06-14 오후 10 56 07" src="https://user-images.githubusercontent.com/39258902/84595323-3cfea100-ae92-11ea-98c8-2ed6ec2b2755.png">
+
+
+
+
+
+
+
+
+
+
