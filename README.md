@@ -1,6 +1,6 @@
 # 🏃 모두의 헬스 케어 비서 - MOBI 
 > Notion: https://www.notion.so/MOBI-041d60cbe6864780a47d9ba9e671b8f8
-<img width="1788" alt="스크린샷 2020-06-14 오후 10 44 42" src="https://user-images.githubusercontent.com/39258902/84595021-aa113700-ae90-11ea-99c7-9ecea9910285.png">
+<img width="300" alt="스크린샷 2020-06-14 오후 11 01 35" src="https://user-images.githubusercontent.com/39258902/84595467-02493880-ae93-11ea-9b14-8f9bc3c800f4.png">
 
 
 ## ✍️ 주요 기능
