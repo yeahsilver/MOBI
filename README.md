@@ -50,7 +50,7 @@
 <br/>
 
 ## ⏰   프로젝트 일정
-> 추후 업로드 예정
+![플래너](https://user-images.githubusercontent.com/39258902/85100569-6aa16c80-b23b-11ea-9329-ace3e9067284.png)
 
 <br/>
 
