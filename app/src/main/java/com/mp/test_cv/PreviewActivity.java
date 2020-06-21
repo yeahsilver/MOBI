@@ -32,6 +32,8 @@ import com.google.firebase.ml.vision.document.FirebaseVisionDocumentTextRecogniz
 
 import java.io.File;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PreviewActivity extends AppCompatActivity {
     ImageView preview;
@@ -167,15 +169,26 @@ public class PreviewActivity extends AppCompatActivity {
 
         protected void onPostExecute(String result) {
             Log.d("onPostExecute", result);
-
+            Pattern p = Pattern.compile("(^[0-9]*$)");
             // tockenizing start
             String[] texts = result.split("\n");
+            System.out.println(result);
 
             for (int i = 0; i < texts.length; i++) {
                 texts[i] = texts[i].trim();
 
                 if (texts[i].contains("Calories")) {
-                    calories = tokenizing(texts[i], "Calories");
+                    for (int j = 0; j <= i + 1 && j != i; j++) {
+                        Matcher m = p.matcher(texts[j]);
+                        if (j < texts.length && m.find()){
+                            //System.out.println("***확인***: "+texts[j]);
+                            calories = Integer.parseInt(texts[j]);
+                            break;
+                        }
+                    }
+                    if (calories == 0) {
+                        calories = tokenizing(texts[i], "Calories");
+                    }
                 } else if (texts[i].contains("Total Carbohydrate")) {
                     carbohydrate = tokenizing(texts[i], "Total Carbohydrate");
                 } else if (texts[i].contains("Protein")) {
