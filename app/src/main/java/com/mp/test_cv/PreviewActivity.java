@@ -170,8 +170,6 @@ public class PreviewActivity extends AppCompatActivity {
 
             // tockenizing start
             String[] texts = result.split("\n");
-            String nutrition;
-
 
             for (int i = 0; i < texts.length; i++) {
                 texts[i] = texts[i].trim();
