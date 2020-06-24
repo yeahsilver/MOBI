@@ -31,6 +31,7 @@
             android:weightSum="10"
             android:background="@drawable/back_white"
             android:padding="20dp"
+            android:layout_marginBottom="20dp"
             android:orientation="horizontal"
             >
 
@@ -45,7 +46,7 @@
                 android:text="칼로리" />
 
             <EditText
-                android:id="@+id/calorie"
+                android:id="@+id/editCalorie"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:ems="3"
@@ -71,54 +72,51 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/back_white"
-            android:padding="10dp"
-            android:weightSum="10"
             android:gravity="center"
-            android:layout_marginBottom="20dp"
-            >
-
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:weightSum="10">
 
             <LinearLayout
                 android:id="@+id/nutrients"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_weight="10"
-                android:weightSum="8"
                 android:gravity="center"
-                >
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:weightSum="8">
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:weightSum="10"
                     android:layout_weight="1"
-                    >
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textSize="18sp"
-                        android:background="@null"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_weight="4"
-                        android:text="탄수화물" />
+                    android:weightSum="10">
 
                     <EditText
                         android:id="@+id/editCarbo"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:ems="3"
-                        android:inputType="number"
-                        android:layout_marginLeft="10dp"
+                        android:layout_height="61dp"
                         android:layout_gravity="center"
-                        android:gravity="center"
+                        android:layout_marginLeft="10dp"
                         android:layout_weight="6"
+                        android:ems="3"
+                        android:gravity="center"
+                        android:inputType="number"
                         android:text="00" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="4"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:text="탄수화물"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
@@ -126,239 +124,232 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:weightSum="10"
                     android:layout_weight="1"
-                    >
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textSize="18sp"
-                        android:background="@null"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_weight="4"
-                        android:text="단백질" />
+                    android:weightSum="10">
 
                     <EditText
                         android:id="@+id/editProtein"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:ems="3"
-                        android:inputType="number"
                         android:layout_marginLeft="10dp"
-                        android:gravity="center"
                         android:layout_weight="6"
+                        android:ems="3"
+                        android:gravity="center"
+                        android:inputType="number"
                         android:text="00" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="4"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:text="단백질"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:weightSum="10"
                     android:layout_weight="1"
-                    >
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textSize="18sp"
-                        android:background="@null"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_weight="4"
-                        android:text="지방" />
+                    android:weightSum="10">
 
                     <EditText
                         android:id="@+id/editFat"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:ems="3"
-                        android:inputType="number"
                         android:layout_marginLeft="10dp"
-                        android:gravity="center"
                         android:layout_weight="6"
+                        android:ems="3"
+                        android:gravity="center"
+                        android:inputType="number"
                         android:text="00" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="4"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:text="지방"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:weightSum="10"
                     android:layout_weight="1"
-                    >
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textSize="18sp"
-                        android:background="@null"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_weight="4"
-                        android:text="포화지방" />
+                    android:weightSum="10">
 
                     <EditText
                         android:id="@+id/editSaturFat"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:ems="3"
-                        android:inputType="number"
                         android:layout_marginLeft="10dp"
-                        android:gravity="center"
                         android:layout_weight="6"
+                        android:ems="3"
+                        android:gravity="center"
+                        android:inputType="number"
                         android:text="00" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="4"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:text="포화지방"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:weightSum="10"
                     android:layout_weight="1"
-                    >
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textSize="18sp"
-                        android:background="@null"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_weight="4"
-                        android:text="당류" />
+                    android:weightSum="10">
 
                     <EditText
                         android:id="@+id/editSugar"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:ems="3"
-                        android:inputType="number"
                         android:layout_marginLeft="10dp"
-                        android:gravity="center"
                         android:layout_weight="6"
+                        android:ems="3"
+                        android:gravity="center"
+                        android:inputType="number"
                         android:text="00" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="4"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:text="당류"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:weightSum="10"
                     android:layout_weight="1"
-                    >
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textSize="18sp"
-                        android:background="@null"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_weight="4"
-                        android:text="나트륨" />
+                    android:weightSum="10">
 
                     <EditText
                         android:id="@+id/editSodium"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:ems="3"
-                        android:inputType="number"
                         android:layout_marginLeft="10dp"
-                        android:gravity="center"
                         android:layout_weight="6"
+                        android:ems="3"
+                        android:gravity="center"
+                        android:inputType="number"
                         android:text="00" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="4"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:text="나트륨"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:weightSum="10"
                     android:layout_weight="1"
-                    >
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textSize="18sp"
-                        android:background="@null"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_weight="4"
-                        android:text="식이섬유" />
+                    android:weightSum="10">
 
                     <EditText
                         android:id="@+id/editFiber"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:ems="3"
-                        android:inputType="number"
                         android:layout_marginLeft="10dp"
-                        android:gravity="center"
                         android:layout_weight="6"
+                        android:ems="3"
+                        android:gravity="center"
+                        android:inputType="number"
                         android:text="00" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="4"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:text="식이섬유"
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:weightSum="10"
                     android:layout_weight="1"
-                    >
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textSize="18sp"
-                        android:background="@null"
-                        android:layout_gravity="center"
-                        android:gravity="center"
-                        android:layout_weight="4"
-                        android:textColor="@color/colorPrimary"
-                        android:text="섭취량 계산(회)" />
+                    android:weightSum="10">
 
                     <EditText
                         android:id="@+id/calculate"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:ems="3"
-                        android:inputType="number"
                         android:layout_marginLeft="10dp"
-                        android:gravity="center"
                         android:layout_weight="6"
+                        android:ems="3"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:text="1"
+                        android:textColor="@color/colorPrimary" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="4"
+                        android:background="@null"
+                        android:gravity="center"
+                        android:text="섭취량 계산(회)"
                         android:textColor="@color/colorPrimary"
-                        android:text="1" />
+                        android:textSize="18sp" />
 
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="255dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:padding="10dp"
-                >
+                android:orientation="horizontal"
+                android:padding="20dp">
+
+
                 <Button
                     android:id="@+id/scan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
                     android:background="@drawable/btn_edge_purple"
-                    android:textColor="@color/colorPrimary"
                     android:text="이미지 스캔"
-                    android:layout_marginBottom="10dp"
-                    />
-
+                    android:textColor="@color/colorPrimary" />
 
                 <Button
                     android:id="@+id/submit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
                     android:background="@drawable/btn_purple"
                     android:text="수정 완료"
                     android:textColor="@android:color/white" />
