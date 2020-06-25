@@ -11,17 +11,8 @@
 
 * **몸 상태 & 관리 루틴 제시**
 
-  * BMI 지수, 근육량, 체지방량 기록 후 수치 예측 및 목표 수치 제시
+  * BMI 지수, 근육량, 체지방량 기록 후 수치 예측
 
-
-* **몸 상태 비교**
-
-  * 눈바디 사진첩 생성 후 몸의 변화 관찰
-
-
-* **운동 도우미**
-
-  * 사용자의 음성 인식 기반으로 횟수 기록
 
 <br/>
 
@@ -33,7 +24,7 @@
 ## 💁 팀 구성
   * **김승지: Project Manager & Design Administrator**
 
-    * ` UI `, ` Firebase ML KIT Manager `, ` OpenCV `
+    * ` UI `, ` Firebase ML KIT Manager `, ` Firebase Database Manager `
 
   * **박재희: Design Administrator**
 
@@ -41,7 +32,7 @@
 
   * **허예은: firebase Connect Manager**
 
-    * ` Firebase ML KIT Connect Manager `, ` OpenCV ` , `Schedule Manager`
+    * ` Firebase ML KIT Connect Manager `, `Schedule Manager`
 
   * **박정아: Server Manager & Database Administrator**
 
@@ -55,7 +46,7 @@
 <br/>
 
 
-## 👩🏻‍💻  개발 환경 (추후 변동 가능)
+## 👩🏻‍💻  개발 환경
 * Android Studio
 
 * Firebase Database
@@ -81,12 +72,14 @@
 
  *  ` 팀원명 `
 
-    * 새로운 기능을 추가할 때 생성하는 브랜치. 기능이 완성되면 'dev' 브랜치에 merge
+    * 새로운 기능을 추가할 때 생성하는 브랜치. 기능이 완성되면 'dev' 브랜치에 merge 후 제거 (현재 모든 브랜치 제거 완료)
 
 <br/>
 
 > Commit Chart
->  > 프로젝트 완성 후 업로드 예정
+>  > 2020년 6월 25일자로 모든 브랜치 관리 완료.
+<img width="780" alt="스크린샷 2020-06-26 오전 12 04 32" src="https://user-images.githubusercontent.com/39258902/85745386-9f805880-b740-11ea-87b8-70a48d78766a.png">
+
 
 <br/>
 
@@ -111,10 +104,10 @@
 
 <br/>
 
-- Firebase Authentication
+> Firebase Authentication
   - ` User Info `
 
-- Firebase Cloud
+> Firebase Cloud
   - ` ML Kit Module `
 
 <br/>
@@ -172,17 +165,7 @@
 <img width="1789" alt="스크린샷 2020-06-14 오후 10 54 19" src="https://user-images.githubusercontent.com/39258902/84595284-fc9f2300-ae91-11ea-8957-e144a49636dd.png">
 
 
-<img width="1790" alt="스크린샷 2020-06-14 오후 10 55 53" src="https://user-images.githubusercontent.com/39258902/84595317-34a66600-ae92-11ea-916e-a6b6c4049bbb.png">
+<img width="1791" alt="스크린샷 2020-06-26 오전 12 10 00" src="https://user-images.githubusercontent.com/39258902/85746382-61cfff80-b741-11ea-8ebf-af75eea393ef.png">
 
 
 <img width="1792" alt="스크린샷 2020-06-14 오후 10 56 07" src="https://user-images.githubusercontent.com/39258902/84595323-3cfea100-ae92-11ea-98c8-2ed6ec2b2755.png">
-
-
-
-
-
-
-
-
-
-
