@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -35,7 +36,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PreviewActivity extends AppCompatActivity {
+public class PreviewActivity extends AppCompatActivity implements CheckDialog.CheckDialogListener {
     ImageView preview;
     FrameLayout frameLayout;
     TextView txt;
@@ -63,7 +64,7 @@ public class PreviewActivity extends AppCompatActivity {
 
         frameLayout = findViewById(R.id.frameLayout);
 
-        txt = findViewById(R.id.txt);
+        //txt = findViewById(R.id.txt);
 
         preview = findViewById(R.id.preview);
 
@@ -208,7 +209,7 @@ public class PreviewActivity extends AppCompatActivity {
             }
 
             // 결과를 화면에 띄어줌
-            txt.setText("칼로리(Calories) : " + calories +
+            /*txt.setText("칼로리(Calories) : " + calories +
                     "\n탄수화물(Total Carbohydrate) : " + carbohydrate +
                     "\n단백질(Protein) : " + protein +
                     "\n지방(Total Fat) : " + fat +
@@ -216,8 +217,7 @@ public class PreviewActivity extends AppCompatActivity {
                     "\n당류(Total Sugars) : " + sugars +
                     "\n나트륨(Sodium) : " + sodium +
                     "\n식이섬유(Dietary Fiber) : " + dietaryFiber);
-
-
+*/
             /*
             System.out.println("Calories : " + calories);
             System.out.println("Total Fat : " + fat);
@@ -230,11 +230,11 @@ public class PreviewActivity extends AppCompatActivity {
             // tockenizing --
             //txt.setText(result);
             //Toast.makeText(PreviewActivity.this, "" + result, Toast.LENGTH_LONG).show();
-
             btnHome.setEnabled(true);
             btnHome.setText("인식 완료");
             //button.setEnabled(true);
             //button.setText("텍스트 인식");
+            showCheckDialog();
         }
 
         // tockenizing --
@@ -275,4 +275,27 @@ public class PreviewActivity extends AppCompatActivity {
             return intake;
         }
         // tockenizing end
+        private void showCheckDialog() {
+            // Create an instance of the dialog fragment and show it
+            DialogFragment dialog = new CheckDialog();
+            Bundle scanInfo = new Bundle();
+            makeBundles(scanInfo);
+            dialog.setArguments(scanInfo);
+            dialog.show(getSupportFragmentManager(), "CheckDialogFragment");
+        }
+    public void onDialogPositiveClick(DialogFragment dialog) {
+    }
+
+    public void onDialogNegativeClick(DialogFragment dialog) {
+    }
+        private void makeBundles(Bundle arg) {
+            arg.putString("calories", Integer.toString(calories));
+            arg.putString("fat", Integer.toString(fat));
+            arg.putString("carbohydrate", Integer.toString(carbohydrate));
+            arg.putString("protein", Integer.toString(protein));
+            arg.putString("saturFat", Integer.toString(saturFat));
+            arg.putString("sugar", Integer.toString(sugars));
+            arg.putString("dietaryFiber", Integer.toString(dietaryFiber));
+            arg.putString("sodium", Integer.toString(sodium));
+        }
 }

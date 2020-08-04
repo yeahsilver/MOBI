@@ -112,22 +112,25 @@ public class NutritionInfoActivity extends AppCompatActivity implements CheckDia
         startActivity(intent);
     }
     public void showCheckDialog() {
+        calories = Integer.valueOf(((EditText) findViewById(R.id.editCalorie)).getText().toString());
+        carbohydrate = Integer.valueOf(((EditText) findViewById(R.id.editCarbo)).getText().toString());
+        protein = Integer.valueOf(((EditText) findViewById(R.id.editProtein)).getText().toString());
+        fat = Integer.valueOf(((EditText) findViewById(R.id.editFat)).getText().toString());
+        saturatedFat = Integer.valueOf(((EditText) findViewById(R.id.editSaturFat)).getText().toString());
+        sugar = Integer.valueOf(((EditText) findViewById(R.id.editSugar)).getText().toString());
+        sodium = Integer.valueOf(((EditText) findViewById(R.id.editSodium)).getText().toString());
+        dietaryFiber = Integer.valueOf(((EditText) findViewById(R.id.editFiber)).getText().toString());
+        inputIntake = new PersonalDailyIntake(calories, carbohydrate, protein, fat, saturatedFat, sugar, sodium, dietaryFiber);
+        inputTotal = new TotalDailyIntake(calories, carbohydrate, protein, fat, saturatedFat, sugar, sodium, dietaryFiber);
         // Create an instance of the dialog fragment and show it
         DialogFragment dialog = new CheckDialog();
-        dialog.show(getSupportFragmentManager(), "NoticeDialogFragment");
+        Bundle scanInfo = new Bundle();
+        makeBundles(scanInfo);
+        dialog.setArguments(scanInfo);
+        dialog.show(getSupportFragmentManager(), "CheckDialogFragment");
     }
     public void sendData() {
         if(dialogCheck) {
-            calories = Integer.valueOf(((EditText) findViewById(R.id.editCalorie)).getText().toString());
-            carbohydrate = Integer.valueOf(((EditText) findViewById(R.id.editCarbo)).getText().toString());
-            protein = Integer.valueOf(((EditText) findViewById(R.id.editProtein)).getText().toString());
-            fat = Integer.valueOf(((EditText) findViewById(R.id.editFat)).getText().toString());
-            saturatedFat = Integer.valueOf(((EditText) findViewById(R.id.editSaturFat)).getText().toString());
-            sugar = Integer.valueOf(((EditText) findViewById(R.id.editSugar)).getText().toString());
-            sodium = Integer.valueOf(((EditText) findViewById(R.id.editSodium)).getText().toString());
-            dietaryFiber = Integer.valueOf(((EditText) findViewById(R.id.editFiber)).getText().toString());
-            inputIntake = new PersonalDailyIntake(calories, carbohydrate, protein, fat, saturatedFat, sugar, sodium, dietaryFiber);
-            inputTotal = new TotalDailyIntake(calories, carbohydrate, protein, fat, saturatedFat, sugar, sodium, dietaryFiber);
             //사용자 정보 db 받고,inputIntake로 해당 정보들 갱신
             //모든 정보 갱신 과정이 끝나면 mainActivity로 간다. (ui업데이트)
             if (carbohydrate >= 0 && protein >= 0 && fat >= 0 && saturatedFat >= 0 && sugar >= 0 && sodium >= 0 && dietaryFiber >= 0) {
@@ -236,6 +239,15 @@ public class NutritionInfoActivity extends AppCompatActivity implements CheckDia
     @Override
     public void onDialogNegativeClick(DialogFragment dialog) {
         dialogCheck = true;
-        sendData();
+    }
+    private void makeBundles(Bundle arg) {
+        arg.putString("calories", Integer.toString(calories));
+        arg.putString("fat", Integer.toString(fat));
+        arg.putString("carbohydrate", Integer.toString(carbohydrate));
+        arg.putString("protein", Integer.toString(protein));
+        arg.putString("saturFat", Integer.toString(saturatedFat));
+        arg.putString("sugar", Integer.toString(sugar));
+        arg.putString("dietaryFiber", Integer.toString(dietaryFiber));
+        arg.putString("sodium", Integer.toString(sodium));
     }
 }
