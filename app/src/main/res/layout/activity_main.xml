@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,10 +9,14 @@
     android:orientation="vertical"
     android:weightSum="12"
     >
-
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="20dp">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="50dp"
         android:background="@android:color/white"
         android:layout_weight="11"
         android:padding="5dp"
@@ -87,45 +91,45 @@
                 android:background="@null"
                 android:textAlignment="center"
                 />
+            <TextView
+                android:id="@+id/BMI_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="BMI 정보가 나타납니다."
+                android:layout_marginTop="10dp"
+                android:textSize="15sp" />
 
         </LinearLayout>
 
-
-
-
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/back_white"
-            android:layout_marginTop="10dp"
-            android:weightSum="10"
-            android:padding="10dp"
-            >
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@null"
-                android:textSize="20dp"
-                android:text="▼ 영양성분 별 섭취량"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
-                android:textAlignment="center"
-                android:layout_weight="9"
-                />
+                android:text="오늘 섭취량 정보"
+                android:textColor="#FFFFFF"
+                android:textSize="25dp"
+                android:textStyle="bold"></TextView>
 
             <Button
                 android:id="@+id/NutritionInfoButton"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
                 android:background="@drawable/btn_edge_purple"
-                android:padding="5dp"
-                android:text="상세정보"
+                android:padding="10dp"
+                android:text="섭취량 기록"
                 android:textSize="10sp"
-                android:layout_weight="1"
-                />
-
+                android:weightSum="10" />
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -142,21 +146,9 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
-
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/BMI_info"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/back_white"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:paddingTop="15dp"
-            android:text="BMI 정보가 나타납니다."
-            android:layout_marginTop="10dp"
-            android:textSize="20sp" />
     </LinearLayout>
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>
 

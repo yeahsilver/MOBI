@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                             startToast("기본 정보를 기록해주세요.");
                             myStartActivity(MemberInitActivity.class);
                         }
-                        startToast("잘못된 접근입니다..");
+                        //startToast("잘못된 접근입니다..");
                         Log.d(TAG, "No such document");
                     }
                 }

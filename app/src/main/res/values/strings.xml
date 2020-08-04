@@ -24,4 +24,8 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="dialog_message">아래와 같이 섭취량을 변경하시겠습니까?</string>
+    <string name="dialog_title">변경 확인</string>
+    <string name="cancel">취소</string>
+    <string name="submit">확인</string>
 </resources>
